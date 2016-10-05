@@ -10,10 +10,13 @@ $log = new Logger('main');
 $log->pushHandler(new StreamHandler('logs/everything.log', Logger::DEBUG));
 $log->pushHandler(new StreamHandler('logs/errors.log', Logger::ERROR));
 
-DB::$dbName = 'cp4724_bestbid';
-DB::$user = 'cp4724_behnaz';
-DB::$host='';
-DB::$password = ';=F7M)k#yZg^';
+//DB::$dbName = 'cp4724_bestbid';
+//DB::$user = 'cp4724_behnaz';
+//DB::$host='';
+//DB::$password = ';=F7M)k#yZg^';
+DB::$dbName ='bestbid';
+DB::$user ='bestbid';
+DB::$password='bcrSjdTaCnAZR3sv';
 DB::$error_handler = 'sql_error_handler';
 DB::$nonsql_error_handler = 'nonsql_error_handler';
 
@@ -62,10 +65,16 @@ $app->post('/sell', function() use ($app, $log) {
     $app->response->setStatus(201);
 });
 
-$app->get('/category', function() {
+$app->get('/category/:ID', function($ID) use ($app) {
     //$userID = getAuthUserID();
    // if (!$userID) return;
-    $categoryList = DB::query("SELECT * FROM category ");
+    $categoryList = DB::query("SELECT * FROM category WHERE mainCategoryID=%d", $ID);
+    echo json_encode($categoryList, JSON_PRETTY_PRINT);
+});
+$app->get('/maincategory', function() {
+    //$userID = getAuthUserID();
+   // if (!$userID) return;
+    $categoryList = DB::query("SELECT * FROM maincategory ");
     echo json_encode($categoryList, JSON_PRETTY_PRINT);
 });
 

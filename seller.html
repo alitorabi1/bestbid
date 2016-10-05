@@ -11,10 +11,10 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script>
-            function showCategory(categoryList) {
-
-                $.ajax({
-                    url: "/api.php/category",
+            function loadCategories(){
+                var $ID=$("#mainCategoryList").val();
+                 $.ajax({
+                    url: "/api.php/category/:"+$ID,
                     // data: {},
 
                     statusCode: {
@@ -33,6 +33,29 @@ and open the template in the editor.
                     }
                     $("#categoryList").html(opts);
                 });
+            }
+            function showMainCategory() {
+
+                $.ajax({
+                    url: "/api.php/maincategory",
+                    // data: {},
+
+                    statusCode: {
+                        401: function (xhr) {
+                            // $("#loginPane").show();
+                            // $("#listPane").hide();
+                        }
+                    },
+                    type: "GET",
+                    dataType: "json"
+                }).done(function (data) {
+                    // var sel = $('#categoryList');
+                    var opts = "";
+                    for (var i = 0; i < data.length; i++) {
+                        opts += '<option value="' + data[i].ID + '">' + data[i].name + '</option>';
+                    }
+                    $("#mainCategoryList").html(opts);
+                });
 
 
 
@@ -42,6 +65,7 @@ and open the template in the editor.
 
             }
             $(document).ready(function () {
+                showMainCategory();
 
             });
 
@@ -49,8 +73,10 @@ and open the template in the editor.
     </head>
     <body>
         <div>
+            <select name="maincategoryList" id="mainCategoryList" onchange="loadCategories()">               
+            </select><br><br>
             <select name="categoryList" id="categoryList">               
-            </select>
+            </select><br><br>
             item name for sell: <input type="text" name="name"><br>
             description: <input type="text" name="description"><br>
             <form action="upload.php" method="post" enctype="multipart/form-data">
