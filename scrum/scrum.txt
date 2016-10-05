@@ -19,6 +19,7 @@ NEED HELP:
 Done:
 * Writing steps of our project in Trello
 * create Db and it's tables in IPD8.info Mysql
+* create new table purchases
 
 NOT QUITE DONE:
 
