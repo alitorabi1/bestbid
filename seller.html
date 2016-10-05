@@ -6,11 +6,30 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>bid</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <script>
+            var cuisines = ["Chinese","Indian"];     
+var sel = document.getElementById('CuisineList');
+for(var i = 0; i < cuisines.length; i++) {
+    var opt = document.createElement('option');
+    opt.innerHTML = cuisines[i];
+    opt.value = cuisines[i];
+    sel.appendChild(opt);
+}
+        </script>
     </head>
     <body>
-        <div>TODO write content</div>
+        <div>
+            <select name="cars">
+                <option value="volvo">Volvo</option>
+                <option value="saab">Saab</option>
+                <option value="fiat">Fiat</option>
+                <option value="audi">Audi</option>
+              </select>
+            
+        </div>
     </body>
 </html>
