@@ -18,9 +18,13 @@ NEED HELP:
 05 Oct ------------------------ Behnaz ----------------------
 Done:
 * Writing steps of our project in Trello
+* create Db and it's tables in IPD8.info Mysql
 
 NOT QUITE DONE:
 
+
 TODO TODAY:
+-create seller post (seller post a announce for sel)
 
 NEED HELP:
+must bid  be editable ?
