@@ -65,12 +65,24 @@ $app->post('/sell', function() use ($app, $log) {
     $app->response->setStatus(201);
 });
 
+
+
+
 $app->get('/category/:ID', function($ID) use ($app) {
-    //$userID = getAuthUserID();
-   // if (!$userID) return;
-    $categoryList = DB::query("SELECT * FROM category WHERE mainCategoryID=%d", $ID);
-    echo json_encode($categoryList, JSON_PRETTY_PRINT);
+//    sleep(1);
+    $record = DB::query("SELECT * FROM category WHERE mainCategoryID=%d", $ID);
+    // 404 if record not found
+    if (!$record) {
+        $app->response->setStatus(404);
+        echo json_encode("Record not found");
+        return;
+    }
+    echo json_encode($record, JSON_PRETTY_PRINT);
 });
+
+
+
+
 $app->get('/maincategory', function() {
     //$userID = getAuthUserID();
    // if (!$userID) return;

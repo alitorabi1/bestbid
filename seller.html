@@ -12,9 +12,10 @@ and open the template in the editor.
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script>
             function loadCategories(){
-                var $ID=$("#mainCategoryList").val();
+                var ID=$("#mainCategoryList").val();
+                ///api.php/todoitems/" + currentID
                  $.ajax({
-                    url: "/api.php/category/:"+$ID,
+                    url: "/api.php/category/"+ID,
                     // data: {},
 
                     statusCode: {
@@ -26,7 +27,7 @@ and open the template in the editor.
                     type: "GET",
                     dataType: "json"
                 }).done(function (data) {
-                    // var sel = $('#categoryList');
+                    
                     var opts = "";
                     for (var i = 0; i < data.length; i++) {
                         opts += '<option value="' + data[i].ID + '">' + data[i].name + '</option>';
