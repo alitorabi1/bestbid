@@ -9,27 +9,60 @@ and open the template in the editor.
         <title>bid</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script>
-            var cuisines = ["Chinese","Indian"];     
-var sel = document.getElementById('CuisineList');
-for(var i = 0; i < cuisines.length; i++) {
-    var opt = document.createElement('option');
-    opt.innerHTML = cuisines[i];
-    opt.value = cuisines[i];
-    sel.appendChild(opt);
-}
+            function showCategory(categoryList) {
+
+                $.ajax({
+                    url: "/api.php/category",
+                    // data: {},
+
+                    statusCode: {
+                        401: function (xhr) {
+                            // $("#loginPane").show();
+                            // $("#listPane").hide();
+                        }
+                    },
+                    type: "GET",
+                    dataType: "json"
+                }).done(function (data) {
+                    // var sel = $('#categoryList');
+                    var opts = "";
+                    for (var i = 0; i < data.length; i++) {
+                        opts += '<option value="' + data[i].ID + '">' + data[i].name + '</option>';
+                    }
+                    $("#categoryList").html(opts);
+                });
+
+
+
+
+
+
+
+            }
+            $(document).ready(function () {
+
+            });
+
         </script>
     </head>
     <body>
         <div>
-            <select name="cars">
-                <option value="volvo">Volvo</option>
-                <option value="saab">Saab</option>
-                <option value="fiat">Fiat</option>
-                <option value="audi">Audi</option>
-              </select>
-            
+            <select name="categoryList" id="categoryList">               
+            </select>
+            item name for sell: <input type="text" name="name"><br>
+            description: <input type="text" name="description"><br>
+            <form action="upload.php" method="post" enctype="multipart/form-data">
+                Choose item picture:
+                <input type="file" name="fileToUpload">
+                <input type="submit" value="Upload Image" name="submit">
+            </form>
+             Bid Type: <input type="text" name="description"><br>
+             Minimum Bid Amount(CAD)<input type="number" step="0.01" name="minimumBid"><br>
+             
+             
+
         </div>
     </body>
 </html>
