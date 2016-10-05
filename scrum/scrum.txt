@@ -1,0 +1,26 @@
+05 Oct ------------------------ Ali ----------------------
+Done:
+* Create a template on the internet (bestbid.ipd8.info/index.html) for our project
+* Discussion about the first steps (Data, functionalities, pages, ...)
+* Creating our project in Github
+* Creating our project in Trello
+
+NOT QUITE DONE:
+* 
+
+TODO TODAY:
+* Facebook APIs research
+* Implementing Facebook APIs research
+
+NEED HELP:
+
+
+05 Oct ------------------------ Behnaz ----------------------
+Done:
+* Writing steps of our project in Trello
+
+NOT QUITE DONE:
+
+TODO TODAY:
+
+NEED HELP:
