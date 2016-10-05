@@ -1,0 +1,2 @@
+https://srv06.datona-1.com:2083/cpsess0173194315/frontend/paper_lantern/cron/index.html
+https://www.a2hosting.com/kb/developer-corner/php/run-php-scripts-from-cron-jobs
