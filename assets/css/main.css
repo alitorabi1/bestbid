@@ -1200,11 +1200,12 @@
 		background-color: #ed391b;
 		color: #fff;
 		text-decoration: none;
-		font-size: 1.75em;
+		font-size: .7em;
 		font-weight: 300;
-		padding: 15px 45px 15px 45px;
+		padding: 5px 15px 5px 15px;
+                margin-top: 10px;
 		outline: 0;
-		border-radius: 10px;
+		border-radius: 5px;
 		box-shadow: inset 0px 0px 0px 1px rgba(0, 0, 0, 0.75), inset 0px 2px 0px 0px rgba(255, 192, 192, 0.5), inset 0px 0px 0px 2px rgba(255, 96, 96, 0.85), 3px 3px 3px 1px rgba(0, 0, 0, 0.15);
 		text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.5);
 	}
@@ -1489,8 +1490,8 @@
 			}
 
 			.button-big {
-				font-size: 1.5em;
-				padding: 10px 35px 10px 35px;
+				font-size: .7em;
+				padding: 5px 15px 5px 15px;
 			}
 
 		/* Banner */
@@ -1559,8 +1560,8 @@
 			}
 
 			.button-big {
-				font-size: 1.5em;
-				padding: 10px 35px 10px 35px;
+				font-size: .7em;
+				padding: 5px 15px 5px 15px;
 			}
 
 		/* Wrappers */

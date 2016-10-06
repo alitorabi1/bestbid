@@ -150,10 +150,10 @@ $app->get('/', function() use ($app) {
             array('sessionUser' => $_SESSION['user']));
 });
 
-$app->get('/emailexists/:email', function($email) use ($app, $log) {
-    $user = DB::queryFirstRow("SELECT * FROM users WHERE email=%s", $email);
+$app->get('/userexists/:username', function($username) use ($app, $log) {
+    $user = DB::queryFirstRow("SELECT * FROM users WHERE username=%s", $username);
     if ($user) {
-        echo "Email already registered";
+        echo "User already registered";
     }
 });
 
@@ -163,26 +163,61 @@ $app->get('/register', function() use ($app, $log) {
 });
 // State 2: submission
 $app->post('/register', function() use ($app, $log) {
-    $name = $app->request->post('name');
+    $username = $app->request->post('username');
     $email = $app->request->post('email');
+    $address = $app->request->post('address');
+    $codepostal = $app->request->post('codepostal');
+    $state = $app->request->post('state');
+    $country = $app->request->post('country');
     $pass1 = $app->request->post('pass1');
     $pass2 = $app->request->post('pass2');
-    $valueList = array ('name' => $name, 'email' => $email);
+    $valueList = array ('username' => $username, 'email' => $email, 'address' => $address, 'codepostal' => $codepostal, 'state' => $state, 'country' => $country);
     // submission received - verify
     $errorList = array();
-    if (strlen($name) < 4) {
-        array_push($errorList, "Name must be at least 4 characters long");
-        unset($valueList['name']);
+    if (strlen($username) < 2) {
+        array_push($errorList, "Username must be at least 2 characters long");
+        unset($valueList['username']);
     }
     if (filter_var($email, FILTER_VALIDATE_EMAIL) === FALSE) {
         array_push($errorList, "Email does not look like a valid email");
         unset($valueList['email']);
     } else {
-        $user = DB::queryFirstRow("SELECT ID FROM users WHERE email=%s", $email);        
-        if ($user) {
-            array_push($errorList, "Email already registered");
-            unset($valueList['email']);
+        $username = DB::queryFirstRow("SELECT ID FROM users WHERE username=%s", $username);        
+        if ($username) {
+            array_push($errorList, "User already registered");
+            unset($valueList['username']);
         }
+    }
+    if (strlen($address) < 10) {
+        array_push($errorList, "Address must be at least 10 characters long");
+    }
+
+    $country="CA";
+    $zip_postal="H4B1R8";
+    $ZIPREG=array(
+	"US"=>"^\d{5}([\-]?\d{4})?$",
+	"UK"=>"^(GIR|[A-Z]\d[A-Z\d]??|[A-Z]{2}\d[A-Z\d]??)[ ]??(\d[A-Z]{2})$",
+	"DE"=>"\b((?:0[1-46-9]\d{3})|(?:[1-357-9]\d{4})|(?:[4][0-24-9]\d{3})|(?:[6][013-9]\d{3}))\b",
+	"CA"=>"^([ABCEGHJKLMNPRSTVXY]\d[ABCEGHJKLMNPRSTVWXYZ])\ {0,1}(\d[ABCEGHJKLMNPRSTVWXYZ]\d)$",
+	"FR"=>"^(F-)?((2[A|B])|[0-9]{2})[0-9]{3}$",
+	"IT"=>"^(V-|I-)?[0-9]{5}$",
+	"AU"=>"^(0[289][0-9]{2})|([1345689][0-9]{3})|(2[0-8][0-9]{2})|(290[0-9])|(291[0-4])|(7[0-4][0-9]{2})|(7[8-9][0-9]{2})$",
+	"NL"=>"^[1-9][0-9]{3}\s?([a-zA-Z]{2})?$",
+	"ES"=>"^([1-9]{2}|[0-9][1-9]|[1-9][0-9])[0-9]{3}$",
+	"DK"=>"^([D-d][K-k])?( |-)?[1-9]{1}[0-9]{3}$",
+	"SE"=>"^(s-|S-){0,1}[0-9]{3}\s?[0-9]{2}$",
+	"BE"=>"^[1-9]{1}[0-9]{3}$"
+    );
+    if ($ZIPREG[$country]) {
+ 	if (!preg_match("/".$ZIPREG[$country]."/i",$codepostal) || strlen($codepostal) < 5){
+            array_push($errorList, "Postalcode for this country is not valid");
+	}
+    }
+    if (strlen($state) < 2) {
+        array_push($errorList, "State must be at least 2 characters long");
+    }
+    if (strlen($country) < 2) {
+        array_push($errorList, "Please enter a country from the list");
     }
     if (!preg_match('/[0-9;\'".,<>`~|!@#$%^&*()_+=-]/', $pass1) || (!preg_match('/[a-z]/', $pass1)) || (!preg_match('/[A-Z]/', $pass1)) || (strlen($pass1) < 8)) {
         array_push($errorList, "Password must be at least 8 characters " .

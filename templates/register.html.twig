@@ -7,12 +7,12 @@
     <script>
         
         function checkEmail() {
-            var email = $('input[name=email]').val();
+            var email = $('input[name=username]').val();
             if (email != '') {
                 //$('#result').load('/emailexists/' + email);
                 // NOTE: .load is actually .ajax call like below
                 $.ajax({
-                    url: '/emailexists/' + email
+                    url: '/userexists/' + email
                 }).done(function (data) {
                     $("#result").html(data);
                 });                
@@ -35,7 +35,7 @@
 
 {% block content %}
             
-<h1>Register user</h1>
+<h1><font size="5" color="red">Register user</font></h1>
 
 {% if errorList %}
     <ul>
@@ -46,12 +46,37 @@
 {% endif %}
 
 <form method="post">
-    Name: <input type="text" name="name" value="{{v.name}}"><br><br>
-    Email: <input type="text" name="email" value="{{v.email}}">
-            <span id="result"></span><br><br>
-    Password: <input type="password" name="pass1"><br><br>
-    Password (repeated) <input type="password" name="pass2"><br><br>
-    <input type="submit" value="Register">
+    <table border="0">
+        <tr>
+            <td>Username:</td><td><input type="text" name="username" value="{{v.username}}"></td>
+        </tr>
+        <tr>
+            <td>Email:</td><td><input type="text" name="email" value="{{v.email}}"></td>
+        </tr>
+        <tr>
+            <td>Address:</td><td><input type="text" name="address" value="{{v.address}}"></td>
+        </tr>
+        <tr>
+            <td>Codepostal:</td><td><input type="text" name="codepostal" value="{{v.codepostal}}"></td>
+        </tr>
+        <tr>
+            <td>State:</td><td><input type="text" name="state" value="{{v.state}}"></td>
+        </tr>
+        <tr>
+            <td>country:</td><td><input type="text" name="country" value="{{v.country}}">   
+            <font size="2" color="yellow">Only (US, UK, DE, CA, FR, IT, AU, NL, ES, DK, SE, BE)</font>
+            </td>
+        </tr>
+        <tr>
+            <td>Password:</td><td><input type="password" name="pass1"></td>
+        </tr>
+        <tr>
+            <td>Password (repeated):</td><td><input type="password" name="pass2"></td>
+        </tr>
+        <tr>
+            <td colspan="2" align="right"><input class="button-big" type="submit" value="Register"></td>
+        </tr>
+    </table>
 </form>
 
 {% endblock %}
