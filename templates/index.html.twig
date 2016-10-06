@@ -1,0 +1,16 @@
+{% extends "template.html.twig" %}
+
+{% block title %}BestBid{% endblock %}
+
+{% block content %}
+    
+<h1>Welcome to BestBid</h1>
+
+{% if sessionUser %}
+    <p>Hello {{sessionUser.name}} ({{sessionUser.email}}).
+        You may <a href="/logout">logout</a>.</p>
+{% else %}
+<p>You may <a href="/login">login</a> or <a href="/register">register</a>.</p>
+{% endif %}
+
+{% endblock %}

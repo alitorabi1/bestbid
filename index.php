@@ -14,10 +14,10 @@ $log->pushHandler(new StreamHandler('logs/everything.log', Logger::DEBUG));
 $log->pushHandler(new StreamHandler('logs/errors.log', Logger::ERROR));
 
 
-
+/*
 // Facebook Login block
 
-/* INCLUSION OF LIBRARY FILES*/
+// INCLUSION OF LIBRARY FILES
 	require_once('lib/Facebook/FacebookSession.php');
 	require_once('lib/Facebook/FacebookRequest.php');
 	require_once('lib/Facebook/FacebookResponse.php');
@@ -33,7 +33,7 @@ $log->pushHandler(new StreamHandler('logs/errors.log', Logger::ERROR));
 	require_once('lib/Facebook/HttpClients/FacebookHttpable.php');
 	require_once('lib/Facebook/HttpClients/FacebookCurlHttpClient.php');
 
-/* USE NAMESPACES */
+// USE NAMESPACES
 	
 	use Facebook\FacebookSession;
 	use Facebook\FacebookRedirectLoginHelper;
@@ -49,7 +49,7 @@ $log->pushHandler(new StreamHandler('logs/errors.log', Logger::ERROR));
 	use Facebook\FacebookCurlHttpClient;
 	use Facebook\FacebookCurl;
 
-/*PROCESS*/
+//PROCESS
 
 	//check if users wants to logout
 	 if(isset($_REQUEST['logout'])){
@@ -95,13 +95,13 @@ $log->pushHandler(new StreamHandler('logs/errors.log', Logger::ERROR));
 	 	}
 
 // Facebook Login block
+*/
 
 
 
-
-DB::$dbName = 'slimshop';
-DB::$user = 'slimshop';
-DB::$password = 'Sn6rABvHDNAxVujJ';
+DB::$dbName = 'bestbid';
+DB::$user = 'bestbid';
+DB::$password = '9uYCYW2r8xDQfZvJ';
 // DB::$host = '127.0.0.1'; // sometimes needed on Mac OSX
 DB::$error_handler = 'sql_error_handler';
 DB::$nonsql_error_handler = 'nonsql_error_handler';
