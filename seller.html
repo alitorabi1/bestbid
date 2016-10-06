@@ -83,13 +83,14 @@ and open the template in the editor.
             <form action="upload.php" method="post" enctype="multipart/form-data">
                 Choose item picture:
                 <input type="file" name="fileToUpload">
-                <input type="submit" value="Upload Image" name="submit">
+             <!---   <input type="submit" value="Upload Image" name="submit">--->
             </form>
              Bid Type: <input type="text" name="description"><br>
              Minimum Bid Amount(CAD)<input type="number" step="0.01" name="minimumBid"><br>
               Bid Start Time:<input type="date" name="bidStartTime">
               Bid End Time:<input type="date" name="bidEndTime">
               Shipping Fee(CAD)<input type="number" step="0.01" name="shippingFee"><br>
+               <button id="addSell">Add your Item for sell</button>
              
 
         </div>
