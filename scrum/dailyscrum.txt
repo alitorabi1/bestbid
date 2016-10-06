@@ -29,3 +29,19 @@ TODO TODAY:
 
 NEED HELP:
 must bid  be editable ?
+06 Oct ------------------------ Ali ----------------------
+
+06 Oct ------------------------ Behnaz ----------------------
+Done:
+* get method for maincategory and category+maincategoryID
+*fill comboboxe  maincategory from DB
+*fill combobox category  with change maincategory from DB
+
+NOT QUITE DONE:
+create seller post (seller post a announce for sel)
+
+TODO TODAY:
+-create bid post
+
+NEED HELP:
+
