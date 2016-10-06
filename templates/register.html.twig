@@ -2,6 +2,35 @@
 
 {% block title %}Register user{% endblock %}
 
+{% block head %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>
+        
+        function checkEmail() {
+            var email = $('input[name=email]').val();
+            if (email != '') {
+                //$('#result').load('/emailexists/' + email);
+                // NOTE: .load is actually .ajax call like below
+                $.ajax({
+                    url: '/emailexists/' + email
+                }).done(function (data) {
+                    $("#result").html(data);
+                });                
+            } else {
+                $('#result').html("");
+            }
+        }
+        
+        $(document).ready(function() {
+            $('input[name=email]').keyup(function() {
+                checkEmail();
+            });
+            $('input[name=email]').bind('paste', function() {
+                checkEmail();
+            });
+        });
+    </script>
+{% endblock %}
 
 
 {% block content %}

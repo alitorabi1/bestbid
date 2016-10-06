@@ -9,13 +9,15 @@ and open the template in the editor.
         <title>bid</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="assets/css/main.css" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script>
-            function loadCategories(){
-                var ID=$("#mainCategoryList").val();
+            function loadCategories() {
+                $("#categoryList").html("");
+                var ID = $("#mainCategoryList").val();
                 ///api.php/todoitems/" + currentID
-                 $.ajax({
-                    url: "/api.php/category/"+ID,
+                $.ajax({
+                    url: "/api.php/category/" + ID,
                     // data: {},
 
                     statusCode: {
@@ -27,7 +29,7 @@ and open the template in the editor.
                     type: "GET",
                     dataType: "json"
                 }).done(function (data) {
-                    
+
                     var opts = "";
                     for (var i = 0; i < data.length; i++) {
                         opts += '<option value="' + data[i].ID + '">' + data[i].name + '</option>';
@@ -58,15 +60,51 @@ and open the template in the editor.
                     $("#mainCategoryList").html(opts);
                 });
 
-
-
-
-
-
-
             }
+           
             $(document).ready(function () {
                 showMainCategory();
+                 $("#addSell").click(function () {
+                // FIXME: verify inputs seem okay,
+                // * title is at least 1-100 chars long
+                // * dueDate must be chosen
+                var categoryID = $("#categoryList").val();
+                var name = $("input[name=name]").val();
+                var description = $("input[name=description]").val();
+                //console.log("DDR: " + dueDateRaw);
+                // var isDoneRaw = $("input[name=isDone]").attr('checked');
+                var bidType = $("input[name=bidType]").val();
+                var minimumBid = $("input[name=minimumBid]").val();
+                var bidStartTime = $("input[name=bidStartTime]").val();
+                var bidEndTime = $("input[name=bidEndTime]").val();
+                var shippingFee = $("input[name=shippingFee]").val();
+                // INSERT
+                $.ajax({
+                    url: "/api.php/itemsforsell",
+                 //   statusCode: {
+                  //      400: function (xhr) {
+                  //          var msg = xhr.responseText;
+                  //          alert("400 received: " + msg);
+                  //      }
+                  //  },
+                    data: JSON.stringify({
+                        name: name,
+                        description: description,
+                        bidType: bidType,
+                        minimumBid: minimumBid,
+                        bidStartTime: bidStartTime,
+                        bidEndTime: bidEndTime,
+                        shippingFee: shippingFee
+
+                    }),
+                    type: "POST",
+                    dataType: "json"
+                }).done(function () {
+                    alert("Addedd successfully");
+                    
+                });
+
+            });
 
             });
 
@@ -83,15 +121,15 @@ and open the template in the editor.
             <form action="upload.php" method="post" enctype="multipart/form-data">
                 Choose item picture:
                 <input type="file" name="fileToUpload">
-             <!---   <input type="submit" value="Upload Image" name="submit">--->
+                <!---   <input type="submit" value="Upload Image" name="submit">--->
             </form>
-             Bid Type: <input type="text" name="description"><br>
-             Minimum Bid Amount(CAD)<input type="number" step="0.01" name="minimumBid"><br>
-              Bid Start Time:<input type="date" name="bidStartTime">
-              Bid End Time:<input type="date" name="bidEndTime">
-              Shipping Fee(CAD)<input type="number" step="0.01" name="shippingFee"><br>
-               <button id="addSell">Add your Item for sell</button>
-             
+            Bid Type: <input type="text" name="bidType"><br>
+            Minimum Bid Amount(CAD)<input type="number" step="0.01" name="minimumBid"><br>
+            Bid Start Time:<input type="date" name="bidStartTime">
+            Bid End Time:<input type="date" name="bidEndTime">
+            Shipping Fee(CAD)<input type="number" step="0.01" name="shippingFee"><br>
+            <button id="addSell">Add your Item for sell</button>
+
 
         </div>
     </body>

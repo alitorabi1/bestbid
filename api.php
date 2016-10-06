@@ -95,14 +95,14 @@ $app->get('/maincategory', function() {
 $app->post('/itemsforsell', function() use ($app, $log) {
     $body = $app->request->getBody();
     $record = json_decode($body, TRUE);
-    // FIXME: verify $record contains all and only fields required with valid values
-    if (!isItemValid($record, $error, TRUE)) {
+    
+   /* if (!isItemValid($record, $error, TRUE)) {
         $app->response->setStatus(400);
         $log->debug("POST /itemsforsell verification failed: " . $error);
         echo json_encode($error);
         //echo json_encode("Bad request - data validation failed");
         return;
-    }
+    }*/
     DB::insert('itemsforsell', $record);
     echo DB::insertId();
     // POST / INSERT is special - returns 201
