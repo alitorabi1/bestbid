@@ -1,5 +1,8 @@
 <?php
 
+
+$target_dir = "uploads/";
+$max_file_size = 5 * 1024 * 1024;
 require_once 'vendor/autoload.php';
 
 use Monolog\Logger;
@@ -27,7 +30,7 @@ function nonsql_error_handler($params) {
     $log->error("Database error: " . $params['error']);
     http_response_code(500);
     header('content-type: application/json');
-    echo json_encode("Internal server error");
+    echo json_encode("Internal no server error");
     die;
 }
 
@@ -37,7 +40,7 @@ function sql_error_handler($params) {
     $log->error(" in query: " . $params['query']);
     http_response_code(500);
     header('content-type: application/json');
-    echo json_encode("Internal server error");
+    echo json_encode("Internal server error11111111");
     die; // don't want to keep going if a query broke
 }
 
@@ -79,8 +82,30 @@ $app->get('/maincategory', function() {
 
 $app->post('/itemsforsell', function() use ($app, $log) {
     $body = $app->request->getBody();
+        
     $record = json_decode($body, TRUE);
+     //
+      $fileUpload = $_FILES['itemPic'];
+      
+       $check = getimagesize($fileUpload["tmp_name"]);
+       $file_name = preg_replace('/[^A-Za-z0-9\-]/', '_', $fileUpload['name']);
+        $file_extension = explode('/', $check['mime'])[1];
+        $target_file = $target_dir . date("Ymd-His-") . $file_name . '.' . $file_extension;
+         echo "file will be named: " . $target_file;
+        if (move_uploaded_file($fileUpload["tmp_name"], $target_file)) {
+            echo "The file " . basename($fileUpload["name"]) . " has been uploaded.";
+            $record['itemPic']=file_get_contents($target_file);
+            print_r($record);
+        } else {
+            die("Fatal error: There was an server-side error handling the upload of your file.");
+        }//
     
+    
+    
+    
+    
+   // $record['itemPic']=$_FILES['itemPic'];
+    // $log->debug("POST /: " .  $record['itemPic']);
    /* if (!isItemValid($record, $error, TRUE)) {
         $app->response->setStatus(400);
         $log->debug("POST /itemsforsell verification failed: " . $error);

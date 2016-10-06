@@ -17,3 +17,13 @@
 	.button-big:active {
 		background-image: url("images/ie/button-big-active.svg");
 	}
+        .mycss{
+            margin:4px;
+            padding:4px;         
+           padding-left: 4px;
+            
+        }
+        input, textarea, select {
+				width:10em;
+				
+			}
