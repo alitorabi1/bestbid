@@ -68,6 +68,7 @@ and open the template in the editor.
                 // FIXME: verify inputs seem okay,
                 // * title is at least 1-100 chars long
                 // * dueDate must be chosen
+                var userID=1;
                 var categoryID = $("#categoryList").val();
                 var name = $("input[name=name]").val();
                 var description = $("input[name=description]").val();
@@ -81,13 +82,15 @@ and open the template in the editor.
                 // INSERT
                 $.ajax({
                     url: "/api.php/itemsforsell",
-                 //   statusCode: {
-                  //      400: function (xhr) {
-                  //          var msg = xhr.responseText;
-                  //          alert("400 received: " + msg);
-                  //      }
-                  //  },
+                    statusCode: {
+                        400: function (xhr) {
+                        //    var msg = xhr.responseText;
+                         //  alert("400 received: " + msg);
+                        }
+                    },
                     data: JSON.stringify({
+                        categoryID:categoryID,
+                        userID:userID,
                         name: name,
                         description: description,
                         bidType: bidType,

@@ -48,22 +48,7 @@ $app = new \Slim\Slim();
 ));
 
 $app->response->headers->set('content-type', 'application/json');
-$app->post('/sell', function() use ($app, $log) {
-    $body = $app->request->getBody();
-    $record = json_decode($body, TRUE);
-  
-  /*  if (!isTodoItemValid($record, $error, TRUE)) {
-        $app->response->setStatus(400);
-        $log->debug("POST /todoitems verification failed: " . $error);
-        echo json_encode($error);
-        //echo json_encode("Bad request - data validation failed");
-        return;
-    }*/
-    DB::insert('itemsforsell', $record);
-    echo DB::insertId();
-    // POST / INSERT is special - returns 201
-    $app->response->setStatus(201);
-});
+
 
 
 
@@ -99,6 +84,22 @@ $app->post('/itemsforsell', function() use ($app, $log) {
    /* if (!isItemValid($record, $error, TRUE)) {
         $app->response->setStatus(400);
         $log->debug("POST /itemsforsell verification failed: " . $error);
+        echo json_encode($error);
+        //echo json_encode("Bad request - data validation failed");
+        return;
+    }*/
+    DB::insert('itemsforsell', $record);
+    echo DB::insertId();
+    // POST / INSERT is special - returns 201
+    $app->response->setStatus(201);
+});
+$app->post('/sell', function() use ($app, $log) {
+    $body = $app->request->getBody();
+    $record = json_decode($body, TRUE);
+  
+  /*  if (!isTodoItemValid($record, $error, TRUE)) {
+        $app->response->setStatus(400);
+        $log->debug("POST /todoitems verification failed: " . $error);
         echo json_encode($error);
         //echo json_encode("Bad request - data validation failed");
         return;
