@@ -30,6 +30,21 @@ TODO TODAY:
 NEED HELP:
 must bid  be editable ?
 06 Oct ------------------------ Ali ----------------------
+Done:
+* Facebook APIs research
+* Implementing Facebook APIs research
+* Creating twig files for the login, logout pages
+
+NOT QUITE DONE:
+* 
+
+TODO TODAY:
+* Discussion about the design of database with Behnaz
+* Discussion about the design of database with our teacher
+* Merging Facebook login and BestBid logins
+
+NEED HELP:
+* About the design of database with our teacher
 
 06 Oct ------------------------ Behnaz ----------------------
 Done:
