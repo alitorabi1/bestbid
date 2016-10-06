@@ -153,7 +153,7 @@ $app->get('/', function() use ($app) {
 $app->get('/userexists/:username', function($username) use ($app, $log) {
     $user = DB::queryFirstRow("SELECT * FROM users WHERE username=%s", $username);
     if ($user) {
-        echo "User already registered";
+        echo "<font size='2' color='red'>&nbsp;&nbsp;User already registered</font>";
     }
 });
 
@@ -182,18 +182,12 @@ $app->post('/register', function() use ($app, $log) {
         array_push($errorList, "Email does not look like a valid email");
         unset($valueList['email']);
     } else {
-        $username = DB::queryFirstRow("SELECT ID FROM users WHERE username=%s", $username);        
+        $username = DB::queryFirstRow("SELECT ID FROM users WHERE email=%s", $email);        
         if ($username) {
             array_push($errorList, "User already registered");
             unset($valueList['username']);
         }
     }
-    if (strlen($address) < 10) {
-        array_push($errorList, "Address must be at least 10 characters long");
-    }
-
-    $country="CA";
-    $zip_postal="H4B1R8";
     $ZIPREG=array(
 	"US"=>"^\d{5}([\-]?\d{4})?$",
 	"UK"=>"^(GIR|[A-Z]\d[A-Z\d]??|[A-Z]{2}\d[A-Z\d]??)[ ]??(\d[A-Z]{2})$",
@@ -208,6 +202,12 @@ $app->post('/register', function() use ($app, $log) {
 	"SE"=>"^(s-|S-){0,1}[0-9]{3}\s?[0-9]{2}$",
 	"BE"=>"^[1-9]{1}[0-9]{3}$"
     );
+    if (strlen($country) < 2 || !array_key_exists($country, $ZIPREG)) {
+        array_push($errorList, "Please enter a country from the list");
+    }
+    if (strlen($address) < 10) {
+        array_push($errorList, "Address must be at least 10 characters long");
+    }
     if ($ZIPREG[$country]) {
  	if (!preg_match("/".$ZIPREG[$country]."/i",$codepostal) || strlen($codepostal) < 5){
             array_push($errorList, "Postalcode for this country is not valid");
@@ -215,9 +215,6 @@ $app->post('/register', function() use ($app, $log) {
     }
     if (strlen($state) < 2) {
         array_push($errorList, "State must be at least 2 characters long");
-    }
-    if (strlen($country) < 2) {
-        array_push($errorList, "Please enter a country from the list");
     }
     if (!preg_match('/[0-9;\'".,<>`~|!@#$%^&*()_+=-]/', $pass1) || (!preg_match('/[a-z]/', $pass1)) || (!preg_match('/[A-Z]/', $pass1)) || (strlen($pass1) < 8)) {
         array_push($errorList, "Password must be at least 8 characters " .
@@ -234,9 +231,10 @@ $app->post('/register', function() use ($app, $log) {
         ));
     } else {
         // STATE 2: submission successful
-        DB::insert('users', array(
-            'name' => $name, 'email' => $email,
-            'password' => password_hash($pass1, CRYPT_BLOWFISH)
+        DB::insert('users', array('username' => $username, 'email' => $email, 
+            'password' => password_hash($pass1, CRYPT_BLOWFISH),
+            'address' => $address, 'codepostal' => $codepostal, 
+            'state' => $state, 'country' => $country
             // 'password' => hash('sha256', $pass1)
         ));
         $id = DB::insertId();
