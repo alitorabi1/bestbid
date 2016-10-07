@@ -172,6 +172,9 @@ $app->post('/register', function() use ($app, $log) {
     $valueList = array ('username' => $username, 'email' => $email, 'address' => $address, 'codepostal' => $codepostal, 'state' => $state, 'country' => $country);
     // submission received - verify
     $errorList = array();
+    if (!$email || !$codepostal || !$pass1 || !$pass2) {
+        array_push($errorList, "Please complete all fields");
+    }
     if (strlen($username) < 2) {
         array_push($errorList, "Username must be at least 2 characters long");
         unset($valueList['username']);
@@ -206,11 +209,11 @@ $app->post('/register', function() use ($app, $log) {
     if (strlen($address) < 10) {
         array_push($errorList, "Address must be at least 10 characters long");
     }
-    if ($ZIPREG[$country]) {
- 	if (!preg_match("/".$ZIPREG[$country]."/i",$codepostal) || strlen($codepostal) < 5){
-            array_push($errorList, "Postalcode for this country is not valid");
-	}
-    }
+//    if ($ZIPREG[$country]) {
+// 	if (!preg_match("/".$ZIPREG[$country]."/i",$codepostal) || strlen($codepostal) < 5){
+//            array_push($errorList, "Postalcode for this country is not valid");
+//	}
+//    }
     if (strlen($state) < 2) {
         array_push($errorList, "State must be at least 2 characters long");
     }
