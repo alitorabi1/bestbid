@@ -20,9 +20,9 @@ $log->pushHandler(new StreamHandler('logs/errors.log', Logger::ERROR));
 DB::$dbName ='bestbid';
 DB::$user ='bestbid';
 
-DB::$password='r9pjLBpJnDqZ5ewv';//home
-DB::$port='3333';
-//DB::$password='bcrSjdTaCnAZR3sv';//college
+//DB::$password='r9pjLBpJnDqZ5ewv';//home
+//DB::$port='3333';
+DB::$password='bDYeWvRqrfzL6wDe';//college
 DB::$error_handler = 'sql_error_handler';
 DB::$nonsql_error_handler = 'nonsql_error_handler';
 
@@ -71,13 +71,16 @@ $app->get('/category/:ID', function($ID) use ($app) {
     echo json_encode($record, JSON_PRETTY_PRINT);
 });
 
-$app->get('/maincategory_index', function() {
+$app->get('/maincategory_index', function()  use ($app){
     //$userID = getAuthUserID();
    // if (!$userID) return;
-    $categoryList = DB::query("SELECT * FROM maincategory ");
+    $mainCategoryList = DB::query("SELECT * FROM maincategory ");
   //  echo json_encode($categoryList, JSON_PRETTY_PRINT);
-    $app->render('template.html.twig', array("product" => $product));
+ //  $mainCategoryList=array('name'=>'44444jfsjosjkkogtksdgk');
+  $app->render('template.html.twig', array("mainCategoryList" => $mainCategoryList));
+  //   $app->render('template.html.twig', array("BBname" => 'alalalalalalllalalla'));
 });
+
 
 
 $app->get('/maincategory', function() {
