@@ -71,7 +71,13 @@ $app->get('/category/:ID', function($ID) use ($app) {
     echo json_encode($record, JSON_PRETTY_PRINT);
 });
 
-
+$app->get('/maincategory_index', function() {
+    //$userID = getAuthUserID();
+   // if (!$userID) return;
+    $categoryList = DB::query("SELECT * FROM maincategory ");
+  //  echo json_encode($categoryList, JSON_PRETTY_PRINT);
+    $app->render('template.html.twig', array("product" => $product));
+});
 
 
 $app->get('/maincategory', function() {
