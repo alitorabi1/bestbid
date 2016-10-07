@@ -21,12 +21,8 @@
 
 								<!-- Nav -->
 									<nav id="nav">
-										<a href="#">Electronics</a>
-										<a href="#">Motors</a>
-										<a href="#">Home & Garden</a>
-										<a href="#">Fashion</a>
-										<a href="#">Help</a>
-									</nav>
+                                                                            {% block nav %}{% endblock%}
+                                                                        </nav>
 
 							</div>
 						</div>
@@ -37,7 +33,7 @@
 								<div class="6u 12u(mobile)">
 
 									<!-- Banner Copy -->
-{% block content %}{% endblock %}
+                                                    {% block content %}{% endblock %}
 								</div>
 								<div class="6u 12u(mobile)">
 
