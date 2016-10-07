@@ -60,7 +60,7 @@ $app->response->headers->set('content-type', 'application/json');
 
 
 $app->get('/category/:ID', function($ID) use ($app) {
-//    sleep(1);
+
     $record = DB::query("SELECT * FROM category WHERE mainCategoryID=%d", $ID);
     // 404 if record not found
     if (!$record) {
@@ -84,23 +84,28 @@ $app->get('/maincategory', function() {
 
 
 $app->post('/itemsforsell', function() use ($app, $log) {
+  
     
-  $body = $app->request->getBody();
+$body = $app->request->getBody();
     
     $record = json_decode($body, TRUE);
-    
+   
     
       $fileUpload = $record['itemPic'];
-       
-       $check = getimagesize($fileUpload["tmp_name"]);
-       $file_name = preg_replace('/[^A-Za-z0-9\-]/', '_', $fileUpload['name']);
+      // $image = 'path-to-your-picture/image.jpg';
+      $image=$fileUpload ;
+    $picture = base64_encode(file_get_contents($image));
+    $record['itemPic']=$picture;
+       //$check = getimagesize($fileUpload["tmp_name"]);
+          
+    /*   $file_name = preg_replace('/[^A-Za-z0-9\-]/', '_', $fileUpload['name']);
         $file_extension = explode('/', $check['mime'])[1];
         $target_file = $target_dir . date("Ymd-His-") . $file_name . '.' . $file_extension;
          echo "file will be named: " . $target_file;
         if (move_uploaded_file($fileUpload["tmp_name"], $target_file)) {
             echo "The file " . basename($fileUpload["name"]) . " has been uploaded.";
             $record['itemPic']=file_get_contents($target_file);
-             $log->debug("POST itemsforsell fiiileeee: " . $record['itemPic']);   
+            
             print_r($record);
         } else {
             die("Fatal error: There was an server-side error handling the upload of your file.");
@@ -119,7 +124,8 @@ $app->post('/itemsforsell', function() use ($app, $log) {
         //echo json_encode("Bad request - data validation failed");
         return;
     }*/
-  DB::insert('itemsforsell', $record);
+ DB::insert('itemsforsell', $record);
+
    // echo DB::insertId();
     // POST / INSERT is special - returns 201
     $app->response->setStatus(201);

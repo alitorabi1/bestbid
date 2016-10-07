@@ -90,16 +90,16 @@ and open the template in the editor.
                     $.ajax({
                         url: "/api.php/itemsforsell",
                           statusCode: {
-                           400: function (xhr) {
-                            var msg = xhr.responseText;
-                          alert("400 received: " + msg);
-                         }
+                         //  400: function (xhr) {
+                          //  var msg = xhr.responseText;
+                          //alert("400 received: " + msg);
+                       //  }
                          },
                         data: JSON.stringify({
                             categoryID: categoryID,
                             userID: userID,
                             name: name,
-                            itemPic:itemPic,
+                         //  itemPic:itemPic,
                             description: description,
                             bidType: bidType,
                             minimumBid: minimumBid,
@@ -129,11 +129,11 @@ and open the template in the editor.
             </select><br>
             item name for sell: <input type="text" name="name"  class="mycss"><br>
             description: <input type="text" name="description" class="mycss"><br>
-            <form action="upload.php" method="post" enctype="multipart/form-data">
+            <!--- <form action="upload.php" method="post" enctype="multipart/form-data">--->
                 Choose item picture:
                 <input type="file" name="itemPic">
                 <!---   <input type="submit" value="Upload Image" name="submit">--->
-            </form>
+            <!--- </form>--->
             Bid Type: <input type="text" name="bidType" class="mycss"><br>
             Minimum Bid Amount(CAD)<input type="number" step="0.01" name="minimumBid" class="mycss"><br>
             Bid Start Time:<input class="mycss" type="date"  name="bidStartTime"  >
