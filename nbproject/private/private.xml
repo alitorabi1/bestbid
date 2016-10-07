@@ -3,27 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-            <file>file:/C:/xampp/htdocs/bestbid/index.html</file>
-            <file>file:/C:/xampp/htdocs/bestbid/assets/css/main.css</file>
-            <file>file:/C:/xampp/htdocs/bestbid/templates/index.html.twig</file>
-            <file>file:/C:/xampp/htdocs/bestbid/templates/register_success.html.twig</file>
             <file>file:/C:/xampp/htdocs/bestbid/templates/template.html.twig</file>
-            <file>file:/C:/xampp/htdocs/bestbid/logs/errors.log</file>
+            <file>file:/C:/xampp/htdocs/bestbid/templates/login_success.html.twig</file>
+            <file>file:/C:/xampp/htdocs/bestbid/templates/logout_success.html.twig</file>
             <file>file:/C:/xampp/htdocs/bestbid/templates/login.html.twig</file>
             <file>file:/C:/xampp/htdocs/bestbid/templates/register.html.twig</file>
             <file>file:/C:/xampp/htdocs/bestbid/index.php</file>
-=======
-            <file>file:/C:/xampp/htdocs/php/bestbid/seller.html</file>
-            <file>file:/C:/xampp/htdocs/php/bestbid/client.html</file>
-            <file>file:/C:/xampp/htdocs/php/bestbid/assets/css/ie9.css</file>
-            <file>file:/C:/xampp/htdocs/php/bestbid/logs/everything.log</file>
-            <file>file:/C:/xampp/htdocs/php/bestbid/assets/css/main.css</file>
-            <file>file:/C:/xampp/htdocs/php/bestbid/api.php</file>
-            <file>file:/C:/xampp/htdocs/php/bestbid/index.php</file>
-            <file>file:/C:/xampp/htdocs/php/bestbid/index.html</file>
-            <file>file:/C:/xampp/htdocs/php/bestbid/logs/errors.log</file>
->>>>>>> 8762ce021eab2aaf99126a9bc04ceaab0c928d36
         </group>
     </open-files>
 </project-private>

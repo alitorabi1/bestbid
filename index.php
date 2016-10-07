@@ -101,7 +101,10 @@ $log->pushHandler(new StreamHandler('logs/errors.log', Logger::ERROR));
 
 DB::$dbName = 'bestbid';
 DB::$user = 'bestbid';
-DB::$password = '9uYCYW2r8xDQfZvJ';
+//DB::$password = '9uYCYW2r8xDQfZvJ';   //JAC
+DB::$password = 'bDYeWvRqrfzL6wDe'; //Home
+DB::$encoding = 'utf8'; // defaults to latin1 if omitted
+
 // DB::$host = '127.0.0.1'; // sometimes needed on Mac OSX
 DB::$error_handler = 'sql_error_handler';
 DB::$nonsql_error_handler = 'nonsql_error_handler';
@@ -135,11 +138,6 @@ $view->parserOptions = array(
     'cache' => dirname(__FILE__) . '/cache'
 );
 $view->setTemplatesDirectory(dirname(__FILE__) . '/templates');
-
-/*
-\Slim\Route::setDefaultConditions(array(
-    'id' => '\d+'
-)); */
 
 if (!isset($_SESSION['user'])) {
     $_SESSION['user'] = array();
@@ -182,10 +180,10 @@ $app->post('/register', function() use ($app, $log) {
         array_push($errorList, "Email does not look like a valid email");
         unset($valueList['email']);
     } else {
-        $username = DB::queryFirstRow("SELECT ID FROM users WHERE email=%s", $email);        
-        if ($username) {
+        $user = DB::queryFirstRow("SELECT ID FROM users WHERE email=%s", $email);        
+        if ($user) {
             array_push($errorList, "User already registered");
-            unset($valueList['username']);
+            unset($valueList['email']);
         }
     }
     $ZIPREG=array(
@@ -249,17 +247,22 @@ $app->get('/login', function() use ($app, $log) {
 });
 // State 2: submission
 $app->post('/login', function() use ($app, $log) {
-    $email = $app->request->post('email');
+    $username = $app->request->post('username');
     $pass = $app->request->post('pass');
-    $user = DB::queryFirstRow("SELECT * FROM users WHERE email=%s", $email);    
+    $user = DB::queryFirstRow("SELECT * FROM users WHERE username=%s", $username);
     if (!$user) {
-        $log->debug(sprintf("User failed for email %s from IP %s",
-                    $email, $_SERVER['REMOTE_ADDR']));
+        $log->debug(sprintf("User failed for username %s from IP %s",
+                    $username, $_SERVER['REMOTE_ADDR']));
         $app->render('login.html.twig', array('loginFailed' => TRUE));
     } else {
+//echo "<pre>\n";
+//echo "\$_FILES:\n";
+//print_r($user);
+//print_r($pass);
+//print_r(!crypt($pass, $user['password']));
         // password MUST be compared in PHP because SQL is case-insenstive
         //if ($user['password'] == hash('sha256', $pass)) {
-        if (password_verify($pass, $user['password'])) {
+        if (crypt($pass, $user['password'])) {
             // LOGIN successful
             unset($user['password']);
             $_SESSION['user'] = $user;
@@ -267,8 +270,8 @@ $app->post('/login', function() use ($app, $log) {
                     $user['ID'], $_SERVER['REMOTE_ADDR']));
             $app->render('login_success.html.twig');
         } else {
-            $log->debug(sprintf("User failed for email %s from IP %s",
-                    $email, $_SERVER['REMOTE_ADDR']));
+            $log->debug(sprintf("User failed for username %s from IP %s",
+                    $username, $_SERVER['REMOTE_ADDR']));
             $app->render('login.html.twig', array('loginFailed' => TRUE));            
         }
     }
