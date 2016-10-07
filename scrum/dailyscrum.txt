@@ -63,13 +63,16 @@ NEED HELP:
 
 07 Oct ------------------------ Ali ----------------------
 Done:
-
+* Registration
+* Login page (without Facebook login)
+* Some changing in template page
 
 NOT QUITE DONE:
-* 
+* Merging Facebook login and BestBid logins
 
 TODO TODAY:
-
+* Merging Facebook login and BestBid logins
+* Trying to merge index.php and api.php
 
 NEED HELP:
 
