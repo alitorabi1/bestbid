@@ -4,6 +4,38 @@
         <title>{% block title %}{% endblock %}</title>
 		<meta charset="utf-8" />
 		<link rel="stylesheet" href="assets/css/main.css" />
+                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>       
+        <script>
+            /*
+             function loadMainCategories() {
+                
+                
+                $.ajax({
+                 //   /api.php/maincategory
+                    url: "/api.php/maincategory_index" ,
+                    // data: {},
+
+                    statusCode: {
+                        401: function (xhr) {
+                            // $("#loginPane").show();
+                            // $("#listPane").hide();
+                        }
+                    },
+                    type: "GET",
+                    dataType: "json"
+                }).done(function (data) {
+
+                  //  var opts = "";
+                  //  for (var i = 0; i < data.length; i++) {
+                 //       opts += '<option value="' + data[i].ID + '">' + data[i].name + '</option>';
+                 //   }
+                 //   $("#categoryList").html(opts);
+                });
+            }
+             $(document).ready(function () {
+                 loadMainCategories();
+             });*/
+            </script>
         {% block head %}
         {% endblock %}
 	</head>
@@ -18,11 +50,21 @@
 
 								<!-- Logo -->
 									<h1><a href="#" id="logo">BestBit</a></h1>
-
+                                                                        
+                                                                           
+                                                                                                                                                          
+                                                                                  
+                                                                                 
 								<!-- Nav -->
-									<nav id="nav">
-                                                                            {% block nav %}{% endblock%}
-                                                                        </nav>
+								<!-- 	<nav id="nav">-->
+                                                                            {% block nav %}
+                                                                                
+                                                                                {% for mList in mainCategoryList %}
+                                                                                  <a href="#">{{mList.name}}</a>
+                                                                                 {% endfor %}
+                                                                                
+                                                                            {% endblock%}
+                                                                    <!--     </nav>-->
 
 							</div>
 						</div>
