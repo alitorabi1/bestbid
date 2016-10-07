@@ -18,7 +18,7 @@ NEED HELP:
 05 Oct ------------------------ Behnaz ----------------------
 Done:
 * Writing steps of our project in Trello
-* create Db and it's tables in IPD8.info Mysql
+* create Db and it's tables in  local host and create db in IPD8.info Mysql and import all tables in host
 * create new table purchases
 
 NOT QUITE DONE:
@@ -59,4 +59,36 @@ TODO TODAY:
 -create bid post
 
 NEED HELP:
+
+
+07 Oct ------------------------ Ali ----------------------
+Done:
+
+
+NOT QUITE DONE:
+* 
+
+TODO TODAY:
+
+
+NEED HELP:
+
+
+
+07 Oct ------------------------ Behnaz ----------------------
+Done:
+* Add image  blob to db 
+
+
+NOT QUITE DONE:
+retrive image blob in html.twig
+
+TODO TODAY:
+-create bid post
+-retrive dynamically category in index.html
+-retriva 5 recent bid in index.html
+
+NEED HELP:
+blobs 
+
 
