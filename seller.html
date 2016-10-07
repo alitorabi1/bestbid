@@ -89,12 +89,12 @@ and open the template in the editor.
                     // INSERT
                     $.ajax({
                         url: "/api.php/itemsforsell",
-                        //  statusCode: {
-                        //   400: function (xhr) {
-                        //    var msg = xhr.responseText;
-                        //  alert("400 received: " + msg);
-                        // }
-                        // },
+                          statusCode: {
+                           400: function (xhr) {
+                            var msg = xhr.responseText;
+                          alert("400 received: " + msg);
+                         }
+                         },
                         data: JSON.stringify({
                             categoryID: categoryID,
                             userID: userID,

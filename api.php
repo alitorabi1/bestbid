@@ -1,10 +1,10 @@
 <?php
 
 
-$target_dir = "uploads/";
-$max_file_size = 5 * 1024 * 1024;
 require_once 'vendor/autoload.php';
 
+$target_dir = "uploads/";
+$max_file_size = 5 * 1024 * 1024;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 
@@ -19,7 +19,10 @@ $log->pushHandler(new StreamHandler('logs/errors.log', Logger::ERROR));
 //DB::$password = ';=F7M)k#yZg^';
 DB::$dbName ='bestbid';
 DB::$user ='bestbid';
-DB::$password='bcrSjdTaCnAZR3sv';
+
+DB::$password='r9pjLBpJnDqZ5ewv';//home
+DB::$port='3333';
+//DB::$password='bcrSjdTaCnAZR3sv';//college
 DB::$error_handler = 'sql_error_handler';
 DB::$nonsql_error_handler = 'nonsql_error_handler';
 
@@ -81,12 +84,14 @@ $app->get('/maincategory', function() {
 
 
 $app->post('/itemsforsell', function() use ($app, $log) {
-    $body = $app->request->getBody();
-        
+    
+  $body = $app->request->getBody();
+    
     $record = json_decode($body, TRUE);
-     //
-      $fileUpload = $_FILES['itemPic'];
-      
+    
+    
+      $fileUpload = $record['itemPic'];
+       
        $check = getimagesize($fileUpload["tmp_name"]);
        $file_name = preg_replace('/[^A-Za-z0-9\-]/', '_', $fileUpload['name']);
         $file_extension = explode('/', $check['mime'])[1];
@@ -95,12 +100,13 @@ $app->post('/itemsforsell', function() use ($app, $log) {
         if (move_uploaded_file($fileUpload["tmp_name"], $target_file)) {
             echo "The file " . basename($fileUpload["name"]) . " has been uploaded.";
             $record['itemPic']=file_get_contents($target_file);
+             $log->debug("POST itemsforsell fiiileeee: " . $record['itemPic']);   
             print_r($record);
         } else {
             die("Fatal error: There was an server-side error handling the upload of your file.");
-        }//
+        }
     
-    
+      $log->debug("POST itemsforsell fiiileeee: " . $record);   
     
     
     
@@ -113,26 +119,11 @@ $app->post('/itemsforsell', function() use ($app, $log) {
         //echo json_encode("Bad request - data validation failed");
         return;
     }*/
-    DB::insert('itemsforsell', $record);
-    echo DB::insertId();
+  DB::insert('itemsforsell', $record);
+   // echo DB::insertId();
     // POST / INSERT is special - returns 201
     $app->response->setStatus(201);
 });
-$app->post('/sell', function() use ($app, $log) {
-    $body = $app->request->getBody();
-    $record = json_decode($body, TRUE);
-  
-  /*  if (!isTodoItemValid($record, $error, TRUE)) {
-        $app->response->setStatus(400);
-        $log->debug("POST /todoitems verification failed: " . $error);
-        echo json_encode($error);
-        //echo json_encode("Bad request - data validation failed");
-        return;
-    }*/
-    DB::insert('itemsforsell', $record);
-    echo DB::insertId();
-    // POST / INSERT is special - returns 201
-    $app->response->setStatus(201);
-});
+
 
 $app->run();
