@@ -1,4 +1,4 @@
-{% extends "template.html.twig" %}
+{% extends "master.html.twig" %}
 
 {% block title %}BestBid{% endblock %}
 
@@ -12,7 +12,7 @@
     <p>Hello {{sessionUser.name}} ({{sessionUser.email}}).
         You may <a href="/logout">logout</a>.</p>
 {% else %}
-<p>You may <a href="/login">login</a> or <a href="/register">register</a>.</p>
+    <p>You may <a href="/login">login</a> or <a href="/register">register</a>.</p>
 {% endif %}
 
 {% endblock %}

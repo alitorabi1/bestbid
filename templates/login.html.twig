@@ -1,4 +1,4 @@
-{% extends "template.html.twig" %}
+{% extends "master.html.twig" %}
 
 {% block title %}BestBit Login{% endblock %}
 
@@ -19,7 +19,7 @@
             <td>Password:</td><td><input type="password" name="pass" value="{{v.pass}}"></td>
         </tr>
         <tr>
-            <td><a href="http://bestbid.ipd8.info/fblogin/">Facebook login</a></td><td align="right"><input class="button-big" type="submit" value="Login"></td>
+            <td><a href="{{loginUrl}}"> Facebook login </a></td><td align="right"><input class="button-big" type="submit" value="Login"></td>
         </tr>
     </table>
 </form>

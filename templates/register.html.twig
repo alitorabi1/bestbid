@@ -1,4 +1,4 @@
-{% extends "template.html.twig" %}
+{% extends "master.html.twig" %}
 
 {% block title %}Register user{% endblock %}
 
@@ -54,19 +54,19 @@
             <td>Email:</td><td><input type="text" name="email" value="{{v.email}}"></td>
         </tr>
         <tr>
-            <td>country:</td><td><select type="text" name="country" style="width:179px;">
-                    <option name="CA" value="{{v.country}}">Canada</option>
-                    <option name="US" value="{{v.country}}">United states</option>
-                    <option name="UK" value="{{v.country}}">United Kingdom</option>
-                    <option name="DE" value="{{v.country}}">Denmark</option>
-                    <option name="FR" value="{{v.country}}">France</option>
-                    <option name="IT" value="{{v.country}}">Italy</option>
-                    <option name="AU" value="{{v.country}}">Australia</option>
-                    <option name="NL" value="{{v.country}}">Iran</option>
-                    <option name="ES" value="{{v.country}}">Spain</option>
-                    <option name="DK" value="{{v.country}}">Denmark</option>
-                    <option name="SE" value="{{v.country}}">Sweden</option>
-                    <option name="BE" value="{{v.country}}">Belgium</option>
+            <td>country:</td><td><select type="text" name="country" style="width:175px;">
+                    <option name="CA" value="CA">Canada</option>
+                    <option name="US" value="US">United states</option>
+                    <option name="UK" value="UK">United Kingdom</option>
+                    <option name="DE" value="DE">Denmark</option>
+                    <option name="FR" value="FR">France</option>
+                    <option name="IT" value="IT">Italy</option>
+                    <option name="AU" value="AU">Australia</option>
+                    <option name="IR" value="IR">Iran</option>
+                    <option name="ES" value="ES">Spain</option>
+                    <option name="DK" value="DK">Denmark</option>
+                    <option name="SE" value="SE">Sweden</option>
+                    <option name="BE" value="BE">Belgium</option>
                     </select>
             </td>
         </tr>

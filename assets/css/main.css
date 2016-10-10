@@ -1084,12 +1084,15 @@
 		font-weight: 300;
 	}
 
-	ul, ol, p, dl {
+	ul, ol, p, dl, li {
 		margin: 0 0 2em 0;
+                display: inline-table;
+                padding-right: 20px;
 	}
 
 	a {
-		text-decoration: underline;
+            color: #cc0000;
+            text-decoration: none;
 	}
 
 		a:hover {
@@ -1339,7 +1342,7 @@
 					}
 
 						#header nav a:hover {
-							color: #f6f8f8;
+							color: #cc0000;
 						}
 
 		/* Banner */
@@ -1869,3 +1872,7 @@
 			}
 
 	}
+
+.nav_login_register{
+    float: right;
+}
