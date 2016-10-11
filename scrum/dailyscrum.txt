@@ -110,6 +110,7 @@ Done:
 TODO TODAY:
 ---some nice css
 ----discuss about create user page with Ali
+--add usercredit in user table and discus with Ali
 NEED HELP:
 close Dynamically sells in site or db?????
 
