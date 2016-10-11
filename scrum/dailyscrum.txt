@@ -94,4 +94,24 @@ TODO TODAY:
 NEED HELP:
 blobs 
 
+08,09,10 oct---------------------Behnaz-------------------------------
+Done:
+*add mimetype filed to db itemsforsell and create view.php for view blob from db 
+*create function for show the countdown(time left ) for each sell item
+*create sell.php for add new sell
+*fetch dynamic data into index.html.twig
+          *create a dynamic menu and sub menu from category and maincategory tables
+           * view one banner item in middle of home page fron 400 last items for sell that isbid amount is maximum
+            * view four last item that add for sell dynamically in home page
+*view list of items for each category when user click in menu 
+* createfunction for items that reach to end time
+* create get(/bids) for adding bid if user logined
+*create some templates
+TODO TODAY:
+---some nice css
+----discuss about create user page with Ali
+NEED HELP:
+close Dynamically sells in site or db?????
+
+
 

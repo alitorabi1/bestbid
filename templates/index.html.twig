@@ -1,17 +1,46 @@
 {% extends "master.html.twig" %}
 
 {% block title %}BestBid{% endblock %}
+{% block head %}
+    <style>
+        .baner{
+           float: right;
+           margin: 0 0 10px 10px;
+        }
+    </style>
+{% endblock %}
+{% block menu %}                      
 
-{% block nav %}{% endblock%}
+
+
+    {% for mList in mainCategoryList %}
+        <li  class="dropdown" id="mainu_{{mList.ID}}">
+
+            <a href="#"  class="dropbtn" id="main_{{mList.ID}}"     >{{mList.name}}</a>
+        </li>
+    {% endfor %}
+
+{% endblock %}
+{% block nav %}
+
+{% endblock%}
 
 {% block content %}
     
-<h1>Van Gogh - Starry Night</h1>
-<p>Vincent van Gogh Painting, Oil on Canvas<br> 
-Saint-Rémy, France: June, 1889</p><br><br>
-<p><a href="/bid">Submit a bid</a> <font size="2">(Bids: 75)</p>
-<p>Last bid: $156,135.00 (last chance: 2016-10-21)</font></p>
+    <h1>{{anticItem.name}}</h1>
+    <p>{{anticItem.description}} 
+    </p><br><br>
+    <p><a href = "/viewsellitem/{{anticItem.ID}}">Submit a bid</a> <font size="2"></p>
+    <p>Last bid:
+        {% if maxBid %}
+            {{maxBid.max}}
 
-{% if sessionUser %}    {% else %}    {% endif %}
+        {% else %}
+            0 
+        {% endif %}</p>
+    <p>(last chance: {{anticItem.bidEndTime}})</p>
+
+
+    {% if sessionUser %}    {% else %}    {% endif %}
 
 {% endblock %}

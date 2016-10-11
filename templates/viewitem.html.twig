@@ -1,0 +1,158 @@
+
+ <style>
+     body{
+         margin:auto;
+         margin-top: 70px;
+         margin-left: 80px;
+          margin-right: 230px;
+         background: #D4D9DD url("/images/bg03.jpg");
+     }
+     img{float:right;margin-right: 80px;}
+     h4,h2,h5,p,img{
+         display:block;
+         margin:10px;
+         margin-left: 50px;
+     }
+     h5{
+         color:red;
+     }
+ </style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script>
+    var eventtext = "Left"; // text that appears next to the time left
+    var endtext = "bids Closed!!"; // text that appears when the target has been reached
+
+
+    function timeleft(mydate, id) {
+// Split timestamp into [ Y, M, D, h, m, s ]
+        var t = mydate.split(/[- :]/);
+// Apply each element to the Date function
+        var date = new Date(t[0], t[1] - 1, t[2], t[3], t[4], t[5]);
+
+// -> Wed Jun 09 2010 13:12:01 GMT+0100 (GMT Daylight Time)
+
+        /* getFullYear returns a 4-digit year, rather than 2-3 digit years
+         * For 2011, getYear would return 111 */
+        var year = date.getFullYear();			// in what year will your target be reached?
+        var month = date.getMonth();			// value between 0 and 11 (0=january,1=february,...,11=december)
+        var day = date.getDate();				// between 1 and 31
+        var hour = date.getHours();				// between 0 and 24
+        var minute = date.getMinutes();			// between 0 and 60
+        var second = date.getSeconds();			// between 0 and 60
+
+        /* When creating the end date, add 20 hours to create time */
+        var end = new Date(year, month, day, hour + 20, minute, second);
+
+        /* Why add 50 to minutes? And if you want to do that, why not
+         * do it in the constructor on the line above? Code commented out...
+         end.setMinutes(end.getMinutes() + 50);
+         */
+        var now = new Date();
+        /* changed from getYear with if check < 1900 */
+        yr = now.getFullYear();
+        var sec = end.getSeconds() - now.getSeconds();
+        var min = end.getMinutes() - now.getMinutes();
+        var hr = end.getHours() - now.getHours();
+        var dy = end.getDate() - now.getDate();
+        var mnth = end.getMonth() - now.getMonth();
+        var yr = year - yr;
+        var daysinmnth = 32 - new Date(now.getYear(), now.getMonth(), 32).getDate();
+        if (sec < 0) {
+            sec = (sec + 60) % 60;
+            min--;
+        }
+        if (min < 0) {
+            min = (min + 60) % 60;
+            hr--;
+        }
+        if (hr < 0) {
+            hr = (hr + 24) % 24;
+            dy--;
+        }
+        if (dy < 0) {
+            dy = (dy + daysinmnth) % daysinmnth;
+            mnth--;
+        }
+        if (mnth < 0) {
+            mnth = (mnth + 12) % 12;
+            yr--;
+        }
+        var sectext = " Seconds ";
+        var mintext = " Minutes, and ";
+        var hrtext = " Hours, ";
+        var dytext = " Days, ";
+        var mnthtext = " Months, ";
+        var yrtext = " Years, ";
+        if (yr == 1)
+            yrtext = " Year, ";
+        if (mnth == 1)
+            mnthtext = " Month, ";
+        if (dy == 1)
+            dytext = " Day, ";
+        if (hr == 1)
+            hrtext = " Hour, ";
+        if (min == 1)
+            mintext = " Minute, and ";
+        if (sec == 1)
+            sectext = " second ";
+
+        if (now >= end) {
+            //document.getElementById("timeleft"+id).innerHTML = endtext;
+            $("#timeleft" + id).html(endtext);
+            if (timerID)
+                clearTimeout(timerID);
+        } else {
+            /* added display of hours left:
+             hr + ':' +
+             */
+            $("#timeleft" + id).html(yr + '-' + mnth + '-' + dy + '  ' + hr + ':' + min + ":" + sec);
+            //document.getElementById("timeleft"+id).innerHTML = hr + ':' + min + ":" + sec;
+        }
+        /* Added creation datetime as parameter to the function call */
+
+        timerID = setInterval(function () {
+            timeleft(mydate, id)
+        }, 1000);
+    }
+    $(document).ready(function () {
+
+
+        //   setInterval(function () {
+        //       location.reload();
+        //   }, 1000);
+    });
+</script>
+{% block content %}
+    <h2>{{item.name}}</h2>
+
+    <h4>minimum bid from seller  : {{item.minimumBid}}</h4>
+    <h4>maximum Last bid  : 
+        {% if maxBid %}
+            {{maxBid.max}}
+             
+        {% else %}
+            0 
+        {% endif %}
+    </h4>
+     <h5>(Bids:  {{maxBid.count}})</h5>
+    <img  src="/view.php?id={{item.ID}}">
+    <p>details:{{item.description}}</p>
+    <p>Bid type:{{item.bidType}}</p>
+
+    <p>bid start time:{{item.bidStartTime}}</p>
+    <p>last chance:{{item.bidEndTime}}</p>	
+    <p>Shipping Fee:{{item.shippingFee}}</p>
+    <script >timeleft("{{item.bidEndTime}}",{{item.ID}} )</script>
+    <p>count down: <span id="timeleft{{item.ID}}"></span></p>
+            {% if sessionUser %}
+        <form method="post"  action="/bids">
+            <input type="number" name="bidAmount" > 
+            <input type="hidden"  name="itemID" value="{{item.ID}}" >
+             <input type="hidden"  name="userID" value="{{sessionUser.ID}}" >
+            <input type="submit" value="add your bid">
+        </form>
+    {% else %}
+        <p>You may <a href="/login">login</a> or <a href="/register">register</a>.</p>
+    {% endif %}
+
+{% endblock %}

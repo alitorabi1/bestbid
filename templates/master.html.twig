@@ -3,7 +3,153 @@
     <head>
         <title>{% block title %}{% endblock %}</title>
         <meta charset="utf-8" />
-        <link rel="stylesheet" href="assets/css/main.css" />
+        <link rel="stylesheet" href="/assets/css/main.css" />
+        <style>
+            #navlogo{display:inline-table;float:left;}
+            #categoryMenu{ float: right;display:inline-table; margin: 0 0 10px 10px;}
+            #logo{
+                float: left;
+                margin: 0 0 10px 10px;
+            }
+             ul {
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+
+            }
+
+             li {
+                float: left;
+            }
+
+             li a, .dropbtn {
+                display: inline-block;
+                color: white;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+            }
+
+             li a:hover, .dropdown:hover .dropbtn {
+                background-color: red;
+            }
+
+             li.dropdown {
+                display: inline-block;
+            }
+
+            .dropdown-content {
+                display: none;
+                position: absolute;
+                background-color: #f9f9f9;
+                min-width: 160px;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            }
+
+            .dropdown-content a {
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+                text-align: left;
+            }
+
+            .dropdown-content a:hover {background-color: #f1f1f1}
+
+            .dropdown:hover .dropdown-content {
+                display: block;
+            }
+
+
+        </style>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>       
+        <script>
+            var mainCategoyList;
+            function loadSellListID(id) {
+                ///sellList/:ID 
+                $.ajax({
+                    // client.php/selllist
+                    url: "/selllist/" + id,
+                    // data: {},
+
+                    statusCode: {
+                        401: function (xhr) {
+                            // $("#loginPane").show();
+                            // $("#listPane").hide();
+                        }
+                    },
+                    type: "GET",
+                    dataType: "json"
+                }).done(function (data) {
+
+                });
+            }
+
+            function showMainCategory() {
+
+                $.ajax({
+                    url: "/client.php/maincategory",
+                    // data: {},
+
+                    statusCode: {
+                        401: function (xhr) {
+                            // $("#loginPane").show();
+                            // $("#listPane").hide();
+                        }
+                    },
+                    type: "GET",
+                    dataType: "json"
+                }).done(function (data) {
+                    // var sel = $('#categoryList');
+                    var opts = "";
+                    for (var i = 0; i < data.length; i++) {
+                        loadCategory(data[i].ID);
+                    }
+
+
+                });
+            }
+            function loadCategory(id) {
+                $.ajax({
+                    url: "/client.php/category/" + id,
+                    // data: {},
+
+                    statusCode: {
+                        401: function (xhr) {
+                            // $("#loginPane").show();
+                            // $("#listPane").hide();
+                        }
+                    },
+                    type: "GET",
+                    dataType: "json"
+                }).done(function (data) {
+                    var opts = $("#mainu_" + id).html();
+                    //opts += "<ul>";
+                    opts += '<div class="dropdown-content">';
+                    for (var i = 0; i < data.length; i++) {
+                        //  opts +='<a href="/logout">logout</a>';
+                        opts += '<a href="/selllist/' + data[i].ID + '">' + data[i].name + '</a>';
+                        // opts += '<li class="not_alone"><a href="/selllist/' + data[i].ID + '">' + data[i].name + '</a></li>';
+                        // opts += '<li><a href="" onClick=loadSellListID(' + data[i].ID + ')>' + data[i].name + '</a></li>';
+                        //opts += '<option value="' + data[i].ID + '">' + data[i].name + '</option>';
+                    }
+                    opts += "</div></li>";
+
+                    //$("#main_" + id).html(opts);
+                    $("#mainu_" + id).html(opts);
+                });
+            }
+
+
+
+
+
+            $(document).ready(function () {
+                showMainCategory();
+
+            });
+        </script>
         {% block head %}
         {% endblock %}
     </head>
@@ -17,172 +163,161 @@
                         <div class="12u">
 
                             <!-- Logo -->
-                            <h1><a href="#" id="logo">BestBid</a></h1>
+                            <div id="navlogo">
+                                <h1><a href="#" id="logo">BestBid</a></h1>
+                            </div>
+                            <div id="categoryMenu" >
+                                <ul>
 
-                            <!-- Nav -->
-                            <ul class="nav_login_register">
-                                {% if fbUser %}
-                                    <li>
-                                        <img src="//graph.facebook.com/{{fbUser.ID}}/picture" ><font color="#cc0000">Welcome {{fbUser.name}}<a href="/fblogout.php"> &nbsp;&nbsp;&nbsp;Logout</a>
-                                    </li>
-                                {% elseif sessionUser %}
-                                    <li>
-                                        <font color="#cc0000">Welcome &nbsp;&nbsp;{{sessionUser.username}}  &nbsp;&nbsp;&nbsp;<a href="/logout">Logout</a>
-                                    </li>
-                                {% else %}
-                                    <li>
-                                        <a href="/login">Login</a>
-                                    </li>
-                                    <li>
-                                        <a href="/register">Register</a>
-                                    </li>
-                                    <li></li>
-                                    {% endif %}
-                            </ul>
+                                {% block menu %}{% endblock %}  
+                               </ul>
 
                         </div>
+                        <!-- Nav -->
+                        <ul class="nav_login_register">
+                            {% if fbUser %}
+                                <li>
+                                    <img src="//graph.facebook.com/{{fbUser.ID}}/picture" ><font color="#cc0000">Welcome {{fbUser.name}}<a href="/fblogout.php"> &nbsp;&nbsp;&nbsp;Logout</a>
+                                </li>
+                            {% elseif sessionUser %}
+                                <li>
+                                    <font color="#cc0000">Welcome &nbsp;&nbsp;{{sessionUser.username}}  &nbsp;&nbsp;&nbsp;<a href="/logout">Logout</a>
+                                </li>
+                            {% else %}
+                                <li>
+                                    <a href="/login">Login</a>
+                                </li>
+                                <li>
+                                    <a href="/register">Register</a>
+                                </li>
+                                <li></li>
+                                {% endif %}
+                        </ul>
+
                     </div>
-                </header>
-                <div id="banner">
-                    <div class="container">
-                        <div class="row">
-                            <div class="6u 12u(mobile)">
-
-                                <!-- Banner Copy -->
-                            {% block content %}{% endblock %}
-                        </div>
+                </div>
+            </header>
+            <div id="banner">
+                <div class="container">
+                    <div class="row">
                         <div class="6u 12u(mobile)">
 
-                            <!-- Banner Image -->
-                            <div class="item">
-                                <a href="/bid"><img src="images/goods3.jpg" width="406" alt="Submit a bid"></a>
-                            </div>
+                            <!-- Banner Copy -->
+                        {% block content %}{% endblock %}
+                    </div>
+                    <div class="6u 12u(mobile)">
+
+                        <!-- Banner Image -->
+                        <div class="item">
+
+                            {% block baner %}<img src="/view.php?id={{anticItem.ID}}"   width="406" >{% endblock %} 
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Features -->
-        <div id="features-wrapper">
-            <div id="features">
-                <div class="container">
-                    <div class="row">
+    <!-- Features -->
+    <div id="features-wrapper">
+        <div id="features">
+            <div class="container">
+                <div class="row">
+                    {% for tList in topList %}
                         <div class="3u 12u(mobile)">
 
                             <!-- Feature #1 -->
                             <section>
-                                <a href="#" class="bordered-feature-image"><img src="images/goods1.jpg" alt="drawer" width="262" height="190" /></a>
-                                <h2><a href="/bid">Submit a bid</a> <font size="2">(Bids: 176)</h2>
+                                <a href = "/viewsellitem/{{tList.ID}}"  class="bordered-feature-image">
+                                    <!--- <img src="images/goods1.jpg" alt="drawer" width="262" height="190" />-->
+                                    <img src="/view.php?id={{tList.ID}}" width="262" height="190" >
+                                </a>
+                                <h2><a  href = "/viewsellitem/{{tList.ID}}" >Submit a bid</a> <font size="2">(Bids: 176)</h2>
                                 <h2>Last bid: $1,135.00 (last chance: 2016-10-21)</font></h2>
                             </section>
 
-                        </div>
-                        <div class="3u 12u(mobile)">
-
-                            <!-- Feature #2 -->
-                            <section>
-                                <a href="#" class="bordered-feature-image"><img src="images/goods2.jpg" alt="laptop" width="262" height="190" /></a>
-                                <h2><a href="/bid">Submit a bid</a> <font size="2">(Bids: 121)</h2>
-                                <h2>Last bid: $1,135.00 (last chance: 2016-10-21)</font></h2>
-                            </section>
 
                         </div>
-                        <div class="3u 12u(mobile)">
+                    {% endfor %}  
 
-                            <!-- Feature #3 -->
-                            <section>
-                                <a href="#" class="bordered-feature-image"><img src="images/goods3.jpg" alt="image" width="262" height="190" /></a>
-                                <h2><a href="/bid">Submit a bid</a> <font size="2">(Bids: 75)</h2>
-                                <h2>Last bid: $156,135.00 (last chance: 2016-10-21)</font></h2>
-                            </section>
 
-                        </div>
-                        <div class="3u 12u(mobile)">
 
-                            <!-- Feature #4 -->
-                            <section>
-                                <a href="#" class="bordered-feature-image"><img src="images/goods4.jpg" alt="car" width="262" height="190" /></a>
-                                <h2><a href="/bid">Submit a bid</a> <font size="2">(Bids: 56)</h2>
-                                <h2>Last bid: $15,153.00 (last chance: 2016-10-21)</font></h2>
-                            </section>
-
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Content -->
-        <!-- Footer -->
-        <div id="footer-wrapper">
-            <footer id="footer" class="container">
-                <div class="row">
-                    <div class="8u 12u(mobile)">
+    <!-- Content -->
+    <!-- Footer -->
+    <div id="footer-wrapper">
+        <footer id="footer" class="container">
+            <div class="row">
+                <div class="8u 12u(mobile)">
 
-                        <!-- Links -->
-                        <section>
-                            <h2>Links to Important Stuffs</h2>
-                            <div>
-                                <div class="row">
-                                    <div class="3u 12u(mobile)">
-                                        <ul class="link-list last-child">
-                                            <li><a href="#">Registration</a></li>
-                                            <li><a href="#">Bidding and buying help</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="3u 12u(mobile)">
-                                        <ul class="link-list last-child">
-                                            <li><a href="#">Learn to sell</a></li>
-                                            <li><a href="#">Learn to buy</a></li>
-                                            <li><a href="#">Business sellers</a></li>
-                                            <li><a href="#">Downloads</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="3u 12u(mobile)">
-                                        <ul class="link-list last-child">
-                                            <li><a href="#">Mobile apps</a></li>
-                                            <li><a href="#">Developers</a></li>
-                                            <li><a href="#">Carriers</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="3u 12u(mobile)">
-                                        <ul class="link-list last-child">
-                                            <li><a href="#">Company info</a></li>
-                                            <li><a href="#">News</a></li>
-                                            <li><a href="#">Investors</a></li>
-                                            <li><a href="#">Policies</a></li>
-                                        </ul>
-                                    </div>
+                    <!-- Links -->
+                    <section>
+                        <h2>Links to Important Stuffs</h2>
+                        <div>
+                            <div class="row">
+                                <div class="3u 12u(mobile)">
+                                    <ul class="link-list last-child">
+                                        <li><a href="#">Registration</a></li>
+                                        <li><a href="#">Bidding and buying help</a></li>
+                                    </ul>
+                                </div>
+                                <div class="3u 12u(mobile)">
+                                    <ul class="link-list last-child">
+                                        <li><a href="#">Learn to sell</a></li>
+                                        <li><a href="#">Learn to buy</a></li>
+                                        <li><a href="#">Business sellers</a></li>
+                                        <li><a href="#">Downloads</a></li>
+                                    </ul>
+                                </div>
+                                <div class="3u 12u(mobile)">
+                                    <ul class="link-list last-child">
+                                        <li><a href="#">Mobile apps</a></li>
+                                        <li><a href="#">Developers</a></li>
+                                        <li><a href="#">Carriers</a></li>
+                                    </ul>
+                                </div>
+                                <div class="3u 12u(mobile)">
+                                    <ul class="link-list last-child">
+                                        <li><a href="#">Company info</a></li>
+                                        <li><a href="#">News</a></li>
+                                        <li><a href="#">Investors</a></li>
+                                        <li><a href="#">Policies</a></li>
+                                    </ul>
                                 </div>
                             </div>
-                        </section>
+                        </div>
+                    </section>
 
-                    </div>
-                    <div class="4u 12u(mobile)">
-
-                        <!-- Blurb -->
-                        <section>
-                            <h2>Estimating shipping costs</h2>
-                            <p>
-                                When you list an item, you can offer free shipping, flat rate shipping, 
-                                or calculated shipping based on the buyer's location. 
-                                To help you decide which to offer, you can estimate shipping costs with 
-                                our Shipping Calculator.
-                            </p>
-                        </section>
-
-                    </div>
                 </div>
-            </footer>
-            <!-- Copyright -->
-            <div id="copyright">
-                &copy; BestBid. All rights reserved. | Design: <a href="http://html5up.net">HTML5 UP</a>
+                <div class="4u 12u(mobile)">
+
+                    <!-- Blurb -->
+                    <section>
+                        <h2>Estimating shipping costs</h2>
+                        <p>
+                            When you list an item, you can offer free shipping, flat rate shipping, 
+                            or calculated shipping based on the buyer's location. 
+                            To help you decide which to offer, you can estimate shipping costs with 
+                            our Shipping Calculator.
+                        </p>
+                    </section>
+
+                </div>
             </div>
+        </footer>
+        <!-- Copyright -->
+        <div id="copyright">
+            &copy; BestBid. All rights reserved. | Design: <a href="http://html5up.net">HTML5 UP</a>
         </div>
-
-
     </div>
+
+
+</div>
 
 </body>
 </html>
