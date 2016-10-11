@@ -6,13 +6,12 @@
 
 {% block content %}
     
-<h1>Welcome to BestBid</h1>
+<h1>Van Gogh - Starry Night</h1>
+<p>Vincent van Gogh Painting, Oil on Canvas<br> 
+Saint-Rémy, France: June, 1889</p><br><br>
+<p><a href="/bid">Submit a bid</a> <font size="2">(Bids: 75)</p>
+<p>Last bid: $156,135.00 (last chance: 2016-10-21)</font></p>
 
-{% if sessionUser %}
-    <p>Hello {{sessionUser.name}} ({{sessionUser.email}}).
-        You may <a href="/logout">logout</a>.</p>
-{% else %}
-    <p>You may <a href="/login">login</a> or <a href="/register">register</a>.</p>
-{% endif %}
+{% if sessionUser %}    {% else %}    {% endif %}
 
 {% endblock %}
