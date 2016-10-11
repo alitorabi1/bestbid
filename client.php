@@ -14,19 +14,17 @@ $log = new Logger('main');
 $log->pushHandler(new StreamHandler('logs/everything.log', Logger::DEBUG));
 $log->pushHandler(new StreamHandler('logs/errors.log', Logger::ERROR));
 
-//DB::$dbName = 'cp4724_bestbid';
-//DB::$user = 'cp4724_behnaz';
-//DB::$host='';
-//DB::$password = ';=F7M)k#yZg^';
+///DB::$dbName = 'cp4724_bestbid';
+//DB::$user = 'cp4724_bestbid';
+
+//DB::$password = 'CtIeWH3iU0kx';
 DB::$dbName ='bestbid';
 DB::$user ='bestbid';
 
-//DB::$password='r9pjLBpJnDqZ5ewv';//home
-//DB::$port='3333';
-//DB::$password='bDYeWvRqrfzL6wDe';//college
+
 DB::$password = 'bDYeWvRqrfzL6wDe'; //Home
 DB::$encoding = 'utf8'; // defaults to latin1 if omitted
-DB::$port='3333';
+//DB::$port='3333';
 DB::$error_handler = 'sql_error_handler';
 DB::$nonsql_error_handler = 'nonsql_error_handler';
 

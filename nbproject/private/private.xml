@@ -3,18 +3,24 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/bestbid/templates/login.html.twig</file>
-            <file>file:/C:/xampp/htdocs/bestbid/templates/register.html.twig</file>
+            <file>file:/C:/xampp/htdocs/bestbid/templates/master.html.twig</file>
             <file>file:/C:/xampp/htdocs/bestbid/seller.html</file>
-            <file>file:/C:/xampp/htdocs/bestbid/composer.lock</file>
-            <file>file:/C:/xampp/htdocs/bestbid/templates/details.html.twig</file>
-            <file>file:/C:/xampp/htdocs/bestbid/templates/index.html.twig</file>
-            <file>file:/C:/xampp/htdocs/bestbid/templates/error_internal.html.twig</file>
             <file>file:/C:/xampp/htdocs/bestbid/templates/register_success.html.twig</file>
-            <file>file:/C:/xampp/htdocs/bestbid/templates/template.html.twig</file>
-            <file>file:/C:/xampp/htdocs/bestbid/index.php</file>
             <file>file:/C:/xampp/htdocs/bestbid/templates/login_success.html.twig</file>
             <file>file:/C:/xampp/htdocs/bestbid/templates/logout_success.html.twig</file>
+            <file>file:/C:/xampp/htdocs/bestbid/templates/register.html.twig</file>
+            <file>file:/C:/xampp/htdocs/bestbid/templates/sel.html.twig</file>
+            <file>file:/C:/xampp/htdocs/bestbid/templates/viewitem.html.twig</file>
+            <file>file:/C:/xampp/htdocs/bestbid/composer.lock</file>
+            <file>file:/C:/xampp/htdocs/bestbid/templates/error_internal.html.twig</file>
+            <file>file:/C:/xampp/htdocs/bestbid/selll.php</file>
+            <file>file:/C:/xampp/htdocs/bestbid/templates/index.html.twig</file>
+            <file>file:/C:/xampp/htdocs/bestbid/view.php</file>
+            <file>file:/C:/xampp/htdocs/bestbid/templates/template.html.twig</file>
+            <file>file:/C:/xampp/htdocs/bestbid/client.php</file>
+            <file>file:/C:/xampp/htdocs/bestbid/templates/details.html.twig</file>
+            <file>file:/C:/xampp/htdocs/bestbid/templates/login.html.twig</file>
+            <file>file:/C:/xampp/htdocs/bestbid/index.php</file>
         </group>
     </open-files>
 </project-private>

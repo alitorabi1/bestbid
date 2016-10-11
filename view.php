@@ -7,12 +7,13 @@ require_once 'vendor/autoload.php';
 DB::$dbName ='bestbid';
 DB::$user ='bestbid';
 
-//DB::$password='r9pjLBpJnDqZ5ewv';//home
-//DB::$port='3333';
-//DB::$password='bDYeWvRqrfzL6wDe';//college
+///DB::$dbName = 'cp4724_bestbid';
+//DB::$user = 'cp4724_bestbid';
+
+//DB::$password = 'CtIeWH3iU0kx';
 DB::$password = 'bDYeWvRqrfzL6wDe'; //Home
 DB::$encoding = 'utf8'; // defaults to latin1 if omitted
-DB::$port='3333';
+//DB::$port='3333';
 if (!isset($_GET['id'])) {
     die("You must provide id of image you want to view");
 }
