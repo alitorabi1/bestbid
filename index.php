@@ -199,12 +199,15 @@ $app->post('/login', function() use ($app, $log) {
 });
 
 $app->get('/logout', function() use ($app, $log) {
-   closeAllSellFinishTime();
     $mainCategoryList = DB::query('SELECT * FROM maincategory');
+    $_SESSION['user'] = array();
+   // $app->render('index.html.twig', array('mainCategoryList' => $mainCategoryList));
+   closeAllSellFinishTime();
+    
     $anticItem = DB::queryFirstRow("SELECT * FROM `itemsforsell` WHERE status='open' and minimumBid=(select max(minimumBid) as bid from itemsforsell WHERE status='open' order by ID desc limit 400)order by ID desc limit 400");
     $maxBid = DB::queryFirstRow("SELECT MAX(bidAmount) as max,count(*) as count FROM bids WHERE itemID=%d", $anticItem['ID']);
     $topList = DB::query("SELECT * FROM `itemsforsell` WHERE status='open' order by ID desc LIMIT 4");
-    $app->render('index.html.twig', array('sessionUser' => $_SESSION['user'], 'mainCategoryList' => $mainCategoryList, 'topList' => $topList, 'anticItem' => $anticItem, 'maxBid' => $maxBid));
+    $app->render('index.html.twig', array('mainCategoryList' => $mainCategoryList, 'topList' => $topList, 'anticItem' => $anticItem, 'maxBid' => $maxBid));
 
 });
 
