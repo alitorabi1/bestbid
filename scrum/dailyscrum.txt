@@ -130,3 +130,13 @@ TODO TODAY:
 
 NEED HELP:
 
+12 oct--------------------- Ali -------------------------------
+Done:
+* implementing index page
+* Merging php and html pages
+* create masterempty.html
+
+TODO TODAY:
+* facebook userID to database
+
+NEED HELP:
