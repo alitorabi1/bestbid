@@ -281,7 +281,7 @@ $app->post('/itemsforsell', function() use ($app, $log) {
     $mainCategoryList = DB::query('SELECT * FROM maincategory');
     $fileToUpload = $_FILES['itemPic'];
     $record1 = array();
-    $record1['userID'] = '1';
+    $record1['userID'] = $_SESSION['user']['ID'];
 
     $record1['categoryID'] = $_POST['categoryList'];
     if ($fileToUpload['error'] == 0) {
@@ -306,9 +306,18 @@ $app->post('/itemsforsell', function() use ($app, $log) {
     //    $record1['bidEndTime']= $_POST['bidEndTime'];
     //     $record1['bidStartTime']= $_POST['bidStartTime'];
     DB::insert('itemsforsell', $record1);
-    $app->render('logout_success.html.twig', array('mainCategoryList' => $mainCategoryList));
+    echo DB::insertId();
+   // $app->render('index.html.twig', array('mainCategoryList' => $mainCategoryList));
+     $sellList = DB::query("SELECT * FROM itemsforsell WHERE status='open' AND userID=%d   ", $_SESSION['user']['ID']);
+    
+    //  $maxBid=DB::queryFirstRow("SELECT MAX(bidAmount) as max,count(*) as count FROM bids WHERE itemID=%d", $itemID);
+  
+    $maxBid=array();
+    
+    
+    $app->render('sel.html.twig', array('sessionUser' => $_SESSION['user'], 'sellList' => $sellList, 'mainCategoryList' => $mainCategoryList,'maxBid' => $maxBid));
 
-    // echo DB::insertId();
+     
     // POST / INSERT is special - returns 201
     $app->response->setStatus(201);
 });
