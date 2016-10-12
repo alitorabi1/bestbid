@@ -24,6 +24,11 @@
 {% endblock%}
 
 {% block content %}
+     
+   
+    
+    
+    
     
     <h1>{{anticItem.name}}</h1>
     <p>{{anticItem.description}} 
@@ -31,16 +36,16 @@
         {% if anticItem.ID %}
             <p><a href = "/viewsellitem/{{anticItem.ID}}">Submit a bid</a></p>
         {% else %}
-            <p>You can submit a bid</p>
+            
         {% endif %}
     <p>Last bid:
         {% if maxBid %}
-            {{maxBid.max}}</p>
-            <p>(last chance: {{anticItem.bidEndTime}})</p>
-
+            {{maxBid.max}}
+          
         {% else %}
             0 
-        {% endif %}
+        {% endif %}</p>
+         <p>(last chance: {{anticItem.bidEndTime}})</p>
 
 
     {% if sessionUser %}    {% else %}    {% endif %}
