@@ -10,7 +10,7 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="assets/css/main.css" />
-        <link rel="stylesheet" href="assets/css/ie9.css" />
+      <!---  <link rel="stylesheet" href="assets/css/ie9.css" />-->
         <style>
             input, textarea,  button,label {
                 width : 350px;
