@@ -194,7 +194,13 @@ $app->post('/login', function() use ($app, $log) {
             unset($user['password']);
             $_SESSION['user'] = $user;
             $log->debug(sprintf("User %s logged in successfuly from IP %s", $user['ID'], $_SERVER['REMOTE_ADDR']));
-            $app->render('index.html.twig', array('sessionUser' => $_SESSION['user'], 'mainCategoryList' => $mainCategoryList));
+            $mainCategoryList = DB::query('SELECT * FROM maincategory');
+    $anticItem = DB::queryFirstRow("SELECT * FROM `itemsforsell` WHERE status='open' and minimumBid=(select max(minimumBid) as bid from itemsforsell WHERE status='open' order by ID desc limit 400)order by ID desc limit 400");
+    $maxBid = DB::queryFirstRow("SELECT MAX(bidAmount) as max,count(*) as count FROM bids WHERE itemID=%d", $anticItem['ID']);
+    $topList = DB::query("SELECT * FROM `itemsforsell` WHERE status='open' order by ID desc LIMIT 4");
+    //$app->render('index.html.twig', array('mainCategoryList' => $mainCategoryList, 'topList' => $topList, 'anticItem' => $anticItem, 'maxBid' => $maxBid));
+    $app->render('index.html.twig', array('mainCategoryList' => $mainCategoryList,'topList' => $topList, 'anticItem' => $anticItem, 'maxBid' => $maxBid));
+         //   $app->render('index.html.twig', array('sessionUser' => $_SESSION['user'], 'mainCategoryList' => $mainCategoryList));
         } else {
             $log->debug(sprintf("User failed for username %s from IP %s", $username, $_SERVER['REMOTE_ADDR']));
             $app->render('login.html.twig', array('sessionUser' => $_SESSION['user'],'loginFailed' => TRUE, 'mainCategoryList' => $mainCategoryList));
