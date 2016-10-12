@@ -11,8 +11,6 @@
 {% endblock %}
 {% block menu %}                      
 
-
-
     {% for mList in mainCategoryList %}
         <li  class="dropdown" id="mainu_{{mList.ID}}">
 
@@ -30,15 +28,19 @@
     <h1>{{anticItem.name}}</h1>
     <p>{{anticItem.description}} 
     </p><br><br>
-    <p><a href = "/viewsellitem/{{anticItem.ID}}">Submit a bid</a> <font size="2"></p>
+        {% if anticItem.ID %}
+            <p><a href = "/viewsellitem/{{anticItem.ID}}">Submit a bid</a></p>
+        {% else %}
+            <p>You can submit a bid</p>
+        {% endif %}
     <p>Last bid:
         {% if maxBid %}
-            {{maxBid.max}}
+            {{maxBid.max}}</p>
+            <p>(last chance: {{anticItem.bidEndTime}})</p>
 
         {% else %}
             0 
-        {% endif %}</p>
-    <p>(last chance: {{anticItem.bidEndTime}})</p>
+        {% endif %}
 
 
     {% if sessionUser %}    {% else %}    {% endif %}

@@ -1,22 +1,8 @@
+{% extends "masterempty.html.twig" %}
 
- <style>
-     body{
-         margin:auto;
-         margin-top: 70px;
-         margin-left: 80px;
-          margin-right: 230px;
-         background: #D4D9DD url("/images/bg03.jpg");
-     }
-     img{float:right;margin-right: 80px;}
-     h4,h2,h5,p,img{
-         display:block;
-         margin:10px;
-         margin-left: 50px;
-     }
-     h5{
-         color:red;
-     }
- </style>
+{% block title %}BestBid{% endblock %}
+
+{% block head %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script>
     var eventtext = "Left"; // text that appears next to the time left
@@ -122,6 +108,7 @@
         //   }, 1000);
     });
 </script>
+{% endblock %}
 {% block content %}
     <h2>{{item.name}}</h2>
 
@@ -136,12 +123,12 @@
     </h4>
      <h5>(Bids:  {{maxBid.count}})</h5>
     <img  src="/view.php?id={{item.ID}}">
-    <p>details:{{item.description}}</p>
-    <p>Bid type:{{item.bidType}}</p>
+    <p>details: {{item.description}}</p>
+    <p>Bid type: {{item.bidType}}</p>
 
-    <p>bid start time:{{item.bidStartTime}}</p>
-    <p>last chance:{{item.bidEndTime}}</p>	
-    <p>Shipping Fee:{{item.shippingFee}}</p>
+    <p>bid start time: {{item.bidStartTime}}</p>
+    <p>last chance: {{item.bidEndTime}}</p>	
+    <p>Shipping Fee: {{item.shippingFee}}</p>
     <script >timeleft("{{item.bidEndTime}}",{{item.ID}} )</script>
     <p>count down: <span id="timeleft{{item.ID}}"></span></p>
             {% if sessionUser %}
@@ -152,7 +139,7 @@
             <input type="submit" value="add your bid">
         </form>
     {% else %}
-        <p>You may <a href="/login">login</a> or <a href="/register">register</a>.</p>
+        <p>Please <a href="/login">login</a> or <a href="/register">register</a> to submit a bid.</p>
     {% endif %}
 
 {% endblock %}
