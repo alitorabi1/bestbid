@@ -129,6 +129,11 @@ TODO TODAY:
 * implementing index page
 
 NEED HELP:
+11 oct---------------------Behnaz-------------------------------
+Done:
+change some field in main db
+TODO TODAY:
+*create method /everyminute that we in our website with teacher
 
 12 oct--------------------- Ali -------------------------------
 Done:
