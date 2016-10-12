@@ -140,24 +140,30 @@
 {% block content %}
 
     <table id="t1" >
-        <tr><th>title</th><th>picture</th><th>min amount of bid</th><th>start date</th><th>last chance </th><th>time left y-m-d h:m:s </th></tr>
+        <tr><th>title</th><th>picture</th><th>amount from seller</th><th>last max bid</th><th>start date</th><th>last chance </th><th>time left y-m-d h:m:s </th></tr>
                 {% for mList in sellList %}
 
             <tr  onclick="location.href = '/viewsellitem/{{mList.ID}}'">
                 <td>{{mList.name}}</td>
                 <td><img width="70" src="/view.php?id={{mList.ID}}"></td>
                 <td>{{mList.minimumBid}}</td>
-                <td>{{mList.bidStartTime}}</td>
-                <td>{{mList.bidEndTime}}</td>
-            <script >timeleft("{{mList.bidEndTime}}",{{mList.ID}} )</script>
-            <td ><span id="timeleft{{mList.ID}}"></span></td>
-        </tr>
-    {% endfor %}  
+                <td> {% if maxBid %}
+                    {{maxBid.max}}
 
-</table>
+                {% else %}
+                    0 
+                    {% endif %}</td>
+                    <td>{{mList.bidStartTime}}</td>
+                    <td>{{mList.bidEndTime}}</td>
+                <script >timeleft("{{mList.bidEndTime}}",{{mList.ID}} )</script>
+                <td ><span id="timeleft{{mList.ID}}"></span></td>
+            </tr>
+            {% endfor %}  
+
+            </table>
 
 
-{% endblock %}
+            {% endblock %}
 
 
 

@@ -260,14 +260,19 @@ $app->get('/selllist/:ID', function($ID) use ($app) {
     //}
     // echo json_encode($record, JSON_PRETTY_PRINT);
     // print_r($sellList);
-    $app->render('sel.html.twig', array('sessionUser' => $_SESSION['user'], 'sellList' => $sellList, 'mainCategoryList' => $mainCategoryList));
+     $maxBid=DB::queryFirstRow("SELECT MAX(bidAmount) as max,count(*) as count FROM bids WHERE itemID=%d", $ID);
+    $app->render('sel.html.twig', array('sessionUser' => $_SESSION['user'], 'sellList' => $sellList, 'mainCategoryList' => $mainCategoryList,'maxBid' => $maxBid));
 });
 //viewsellitem/{{mList.ID}}
 $app->get('/viewsellitem/:ID', function($ID) use ($app) {
     closeAllSellFinishTime();
     $mainCategoryList = DB::query('SELECT * FROM maincategory');
     $item = DB::queryFirstRow("SELECT * FROM itemsforsell WHERE status='open' AND ID=%d", $ID);
-    $app->render('viewitem.html.twig', array('sessionUser' => $_SESSION['user'], 'item' => $item, 'mainCategoryList' => $mainCategoryList));
+    $maxBid=DB::queryFirstRow("SELECT MAX(bidAmount) as max,count(*) as count FROM bids WHERE itemID=%d", $ID);
+   
+   
+   // $app->render('viewitem.html.twig', array('sessionUser' => $_SESSION['user'], 'item' => $item, 'mainCategoryList' => $mainCategoryList));
+     $app->render('viewitem.html.twig', array('sessionUser' => $_SESSION['user'], 'item' => $item,'maxBid' => $maxBid,'mainCategoryList' => $mainCategoryList));
 });
 
 $app->post('/itemsforsell', function() use ($app, $log) {
@@ -322,8 +327,14 @@ $app->post('/bids', function() use ($app, $log) {
     // POST / INSERT is special - returns 201
     $app->response->setStatus(201);
     // $log->debug(sprintf("bids %s created"));
-    $sellList = DB::query("SELECT * FROM itemsforsell WHERE status='open' AND categoryID=%d  ORDER BY ID desc ", $itemID);
-    $app->render('sel.html.twig', array('sessionUser' => $_SESSION['user'], 'sellList' => $sellList, 'mainCategoryList' => $mainCategoryList));
+    $sellList = DB::query("SELECT * FROM itemsforsell WHERE status='open' AND ID=%d   ", $itemID);
+    
+      $maxBid=DB::queryFirstRow("SELECT MAX(bidAmount) as max,count(*) as count FROM bids WHERE itemID=%d", $itemID);
+  
+    
+    
+    
+    $app->render('sel.html.twig', array('sessionUser' => $_SESSION['user'], 'sellList' => $sellList, 'mainCategoryList' => $mainCategoryList,'maxBid' => $maxBid));
 });
 
 /////////////////////////////////////////////////////////////
@@ -350,7 +361,7 @@ $app->get('/searchall/:des', function($des) use ($app) {
     $mainCategoryList = DB::query('SELECT * FROM maincategory');
     $sellList = DB::query("SELECT * FROM itemsforsell WHERE status='open' AND  ( name LIKE  %ss  OR  description LIKE  %ss)", $des, $des);
     // LIKE @ProductName OR Barcode  LIKE @Barcode
-
+      $maxBid=DB::queryFirstRow("SELECT MAX(bidAmount) as max,count(*) as count FROM bids WHERE itemID=%d", $ID);
     $app->render('sel.html.twig', array('sessionUser' => $_SESSION['user'], 'sellList' => $sellList, 'mainCategoryList' => $mainCategoryList));
     //   $app->render('sel.html.twig', array('sellList' => $sellList));
 });
