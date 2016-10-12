@@ -246,7 +246,7 @@ $app->get('/selllist/:ID', function($ID) use ($app) {
     $maxBid = DB::queryFirstRow("SELECT MAX(bidAmount) as max,count(*) as count FROM bids WHERE itemID=%d", $ID);
     $app->render('sel.html.twig', array('sessionUser' => $_SESSION['user'], 'sellList' => $sellList, 'mainCategoryList' => $mainCategoryList, 'maxBid' => $maxBid));
 });
-//viewsellitem/{{mList.ID}}
+//wewsellitem/{{mList.ID}}
 $app->get('/viewsellitem/:ID', function($ID) use ($app) {
     closeAllSellFinishTime();
     $mainCategoryList = DB::query('SELECT * FROM maincategory');

@@ -172,10 +172,46 @@
                                     </li>
                                 {% endfor %}
                                 {% if fbUser %}
+                                      <!--- ----------------------------->
+                                    <li  class="dropdown">
+                                        <a href="#"  class="dropbtn"      >sells</a> 
+                                        <ul>
+                                            <li  >
+
+
+                                                <a href="selll.php"  class="dropbtn"     >Add new Sell</a>
+                                            </li> 
+                                            <li  >
+
+
+                                                <a href="/"  class="dropbtn"     >your History</a>
+                                            </li>
+                                           
+                                        </ul>
+                                    </li>
+                                     <!--- ----------------------------->
                                     <li>
                                         <img src="//graph.facebook.com/{{fbUser.ID}}/picture" ><font color="#cc0000">Welcome {{fbUser.name}}<a href="/fblogout.php"> &nbsp;&nbsp;&nbsp;Logout</a>
                                     </li>
                                 {% elseif sessionUser %}
+                                       <!--- ----------------------------->
+                                    <li  class="dropdown">
+                                        <a href="#"  class="dropbtn"      >sells</a> 
+                                        <ul>
+                                            <li  >
+
+
+                                                <a href="selll.php"  class="dropbtn"     >Add new Sell</a>
+                                            </li> 
+                                            <li  >
+
+
+                                                <a href="/"  class="dropbtn"     >your History</a>
+                                            </li>
+                                           
+                                        </ul>
+                                    </li>
+                                     <!--- ----------------------------->
                                     <li>
                                         <font color="#cc0000">Welcome &nbsp;&nbsp;{{sessionUser.username}}  &nbsp;&nbsp;&nbsp;<a href="/logout">Logout</a>
                                     </li>
