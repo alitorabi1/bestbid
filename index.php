@@ -166,7 +166,11 @@ $app->post('/register', function() use ($app, $log) {
 // State 1: first show
 $app->get('/login', function() use ($app, $log) {
     $mainCategoryList = DB::query('SELECT * FROM maincategory');
-    $app->render('login.html.twig', array('mainCategoryList' => $mainCategoryList));
+    $anticItem = DB::queryFirstRow("SELECT * FROM `itemsforsell` WHERE status='open' and minimumBid=(select max(minimumBid) as bid from itemsforsell WHERE status='open' order by ID desc limit 400)order by ID desc limit 400");
+    $maxBid = DB::queryFirstRow("SELECT MAX(bidAmount) as max,count(*) as count FROM bids WHERE itemID=%d", $anticItem['ID']);
+    $topList = DB::query("SELECT * FROM `itemsforsell` WHERE status='open' order by ID desc LIMIT 4");
+    //$app->render('index.html.twig', array('mainCategoryList' => $mainCategoryList, 'topList' => $topList, 'anticItem' => $anticItem, 'maxBid' => $maxBid));
+    $app->render('login.html.twig', array('mainCategoryList' => $mainCategoryList,'topList' => $topList, 'anticItem' => $anticItem, 'maxBid' => $maxBid));
 });
 // State 2: submission
 $app->post('/login', function() use ($app, $log) {
@@ -193,7 +197,7 @@ $app->post('/login', function() use ($app, $log) {
             $app->render('index.html.twig', array('sessionUser' => $_SESSION['user'], 'mainCategoryList' => $mainCategoryList));
         } else {
             $log->debug(sprintf("User failed for username %s from IP %s", $username, $_SERVER['REMOTE_ADDR']));
-            $app->render('login.html.twig', array('loginFailed' => TRUE, 'mainCategoryList' => $mainCategoryList));
+            $app->render('login.html.twig', array('sessionUser' => $_SESSION['user'],'loginFailed' => TRUE, 'mainCategoryList' => $mainCategoryList));
         }
     }
 });
