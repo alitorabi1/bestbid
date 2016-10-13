@@ -161,9 +161,21 @@ NEED HELP:
 
 13 oct--------------------- Behnaz -------------------------------
 Done:
+- fixed all template pages can rende correctley
+-add methods in index php
+-adding some css and javascripts
+-all changes load to server
 
 
 TODO TODAY:
-
+bids
+close or sell automatically with /everyminute
+add administrator page
+add user isAdmin and use credit fields to db
+check user credit when he/she want to add bids
+multiple page for listes that has more than one page information to show
+send email to seller and buyer
+chech in bids time if user have a enough credit or no
+error handlig check
 
 NEED HELP:
