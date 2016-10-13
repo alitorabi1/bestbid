@@ -26,6 +26,7 @@ function nonsql_error_handler($params) {
     global $app, $log;
     $log->error("Database error: " . $params['error']);
     http_response_code(500);
+    $mainCategoryList = DB::query('SELECT * FROM maincategory');
     $app->render('error_internal.html.twig', array('mainCategoryList' => $mainCategoryList));
     die;
 }
@@ -35,6 +36,7 @@ function sql_error_handler($params) {
     $log->error("SQL error: " . $params['error']);
     $log->error(" in query: " . $params['query']);
     http_response_code(500);
+    $mainCategoryList = DB::query('SELECT * FROM maincategory');
     $app->render('error_internal.html.twig', array('mainCategoryList' => $mainCategoryList));
     die; // don't want to keep going if a query broke
 }

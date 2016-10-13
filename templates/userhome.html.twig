@@ -1,0 +1,96 @@
+{% extends "masterempty.html.twig" %}
+
+{% block title %}BestBid{% endblock %}
+{% block head %}
+    <style>
+        .baner{
+            float: right;
+            margin: 0 0 10px 10px;
+        }
+        .gradient {
+            background: red; /* For browsers that do not support gradients */
+            background: -webkit-linear-gradient(red, black); /* For Safari 5.1 to 6.0 */
+            background: -o-linear-gradient(red, black); /* For Opera 11.1 to 12.0 */
+            background: -moz-linear-gradient(red, black); /* For Firefox 3.6 to 15 */
+            background: linear-gradient(red, black); /* Standard syntax (must be last) */
+        }
+        #userContents {
+            display: inline-table;
+            margin-left: 2em;
+            margin-right: 2em;
+        }
+        #userContents div {
+            border-radius: 5px;
+            margin-right: 1em;
+        }
+        #divItemsForSale, #divItemsForPurchase, #divItemsBid {
+            float: left;
+            padding: 2em;
+        }
+        #divItemsForSale td, #divItemsForPurchase td, #divItemsBid  td {
+            padding: .5em;
+        }
+        #divItemsForSale th, #divItemsForPurchase th, #divItemsBid  th {
+            padding: .5em;
+            color: #D4D9DD;
+        }
+    </style>
+{% endblock %}
+{% block menu %}                      
+
+    {% for mList in mainCategoryList %}
+        <li  class="dropdown" id="mainu_{{mList.ID}}">
+
+            <a href="#" class="dropbtn" id="main_{{mList.ID}}">{{mList.name}}</a>
+        </li>
+    {% endfor %}
+
+{% endblock %}
+{% block nav %}
+
+{% endblock%}
+
+{% block content %}
+
+    <h1>Welcome {{sessionUser.username}} to your home page</h1>
+
+    <div id="userContents">
+        <div id="divItemsForSale" class="gradient">
+            <table>
+                <tr><th>Name</th><th>Min bid</th><th>Last chance</th></tr>
+                        {% if saleList %}
+                            {% for sale in saleList %}
+                        <tr><td>{{sale.name}}</td><td>{{sale.minimumBid}}</td><td>{{sale.bidEndTime}}</td></tr>
+                    {% endfor %}
+                {% else %}
+                    <tr><td colspan="3" align="center">No items to show</td></tr>
+                {% endif %}
+            </table>
+        </div>
+        <div id="divItemsForPurchase" class="gradient">
+            <table>
+                <tr><th>Item</th><th>Amount</th><th>Date of purchase</th></tr>
+                        {% if purchaseList %}
+                            {% for purchase in purchaseList %}
+                        <tr><td>{{purchase.itemID}}</td><td>{{purchase.amount}}</td><td>{{purchase.buyDate}}</td></tr>
+                    {% endfor %}
+                {% else %}
+                    <tr><td colspan="3" align="center">No items to show</td></tr>
+                {% endif %}
+            </table>
+        </div>
+        <div id="divItemsBid" class="gradient">
+            <table>
+                <tr><th>Item</th><th>Amount</th><th>Submit date</th></tr>
+                        {% if bidList %}
+                            {% for bid in bidList %}
+                        <tr><td>{{bid.itemID}}</td><td>{{bid.bidAmount}}</td><td>{{bid.bidDate}}</td></tr>
+                    {% endfor %}
+                {% else %}
+                    <tr><td colspan="3" align="center">No items to show</td></tr>
+                {% endif %}
+            </table>
+        </div>
+    </div>
+
+{% endblock %}
