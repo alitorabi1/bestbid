@@ -1,11 +1,12 @@
 <?php
 
 require_once 'vendor/autoload.php';
+require_once 'master.php';
 session_start();
 
 //facebook login
-$fbID = "704374739718815";
-$fbPass = "3cf65c2f0c77bde0f9019fc07d3c0471";
+$fbID = '704374739718815';
+$fbPass = '3cf65c2f0c77bde0f9019fc07d3c0471';
 $fb = new Facebook\Facebook([
     'app_id' => $fbID,
     'app_secret' => $fbPass,
@@ -61,8 +62,16 @@ if (!$accessToken->isLongLived()) {
 $fb->setDefaultAccessToken($accessToken);
 
 try {
-    $response = $fb->get('/me?locale=en_US&fields=id,name,email');
+    $response = $fb->get('/me?locale=en_US&fields=id,name,email,gender,first_name,last_name,location');
     $userNode = $response->getGraphUser();
+
+    // Submission successful
+    $user = DB::queryFirstRow("SELECT * FROM users WHERE username=%s", $userNode->getId());
+    if (!$user) {
+        DB::insert('users', array('username' => $userNode->getId(), 'email' => $userNode->getEmail(), 'fbUID' => 'yes'));
+        $id = DB::insertId();
+        $log->debug(sprintf("Facebook user %s created", $id));
+    }
 } catch (Facebook\Exceptions\FacebookResponseException $e) {
     echo 'Graph returned an error: ' . $e->getMessage();
     exit;
@@ -71,11 +80,19 @@ try {
     exit;
 }
 
+
 $fbUser = array(
-    'name' => $userNode->getName(),
-    'email' => $userNode->getEmail(),
-    'ID' => $userNode->getId(),
+    'username' => $userNode->getName(),
+    'email'=> $userNode->getEmail(),
+    'gender' => $userNode->getGender(),
+    'ID' => $id,
+    'location' => $userNode->getLocation(),
 );
 
 $_SESSION['facebook_access_token'] = $fbUser;
-header("Location: /");
+$_SESSION['user'] = $fbUser;
+        
+header("Location: /");  
+
+
+

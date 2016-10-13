@@ -8,6 +8,10 @@ http://stackoverflow.com/questions/17332431/how-can-i-control-the-speed-that-boo
 
 http://stackoverflow.com/questions/11483594/how-to-log-out-user-using-facebook-sdk
 
+http://stackoverflow.com/questions/520237/how-do-i-expire-a-php-session-after-30-minutes
+http://www.quibids.com/en/quibids101/
+http://stackoverflow.com/questions/4356289/php-random-string-generator
+
 
 behnaz
 -----------

@@ -177,7 +177,7 @@
                                 {% endfor %}
                                 {% if fbUser %}
                                     <li>
-                                        <img src="//graph.facebook.com/{{fbUser.ID}}/picture" ><font color="#cc0000">Welcome {{fbUser.name}}<a href="/fblogout.php"> &nbsp;&nbsp;&nbsp;Logout</a>
+                                        <font color="#cc0000">Welcome {{fbUser.name}}<a href="/fblogout.php"> &nbsp;&nbsp;&nbsp;Logout</a>
                                     </li>
                                 {% elseif sessionUser %}
                                     <li>
@@ -267,7 +267,6 @@
                                     <div class="3u 12u(mobile)">
                                         <ul class="link-list last-child">
                                             <li><a href="#">Company info</a></li>
-                                            <li><a href="#">News</a></li>
                                             <li><a href="#">Policies</a></li>
                                         </ul>
                                     </div>

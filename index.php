@@ -208,6 +208,7 @@ $app->post('/login', function() use ($app, $log) {
             //   $app->render('index.html.twig', array('sessionUser' => $_SESSION['user'], 'mainCategoryList' => $mainCategoryList));
         } else {
             $log->debug(sprintf("User failed for username %s from IP %s", $username, $_SERVER['REMOTE_ADDR']));
+            $mainCategoryList = DB::query('SELECT * FROM maincategory');
             $app->render('login.html.twig', array('sessionUser' => $_SESSION['user'], 'loginFailed' => TRUE, 'mainCategoryList' => $mainCategoryList));
         }
     }
@@ -256,6 +257,11 @@ $app->get('/viewsellitem/:ID', function($ID) use ($app) {
 
     // $app->render('viewitem.html.twig', array('sessionUser' => $_SESSION['user'], 'item' => $item, 'mainCategoryList' => $mainCategoryList));
     $app->render('viewitem.html.twig', array('sessionUser' => $_SESSION['user'], 'item' => $item, 'maxBid' => $maxBid, 'mainCategoryList' => $mainCategoryList));
+});
+
+$app->get('/itemsforsell', function() use ($app, $log) {
+    $mainCategoryList = DB::query('SELECT * FROM maincategory');
+    $app->render('addsell.html.twig', array('sessionUser' => $_SESSION['user'], 'mainCategoryList' => $mainCategoryList));
 });
 
 $app->post('/itemsforsell', function() use ($app, $log) {
