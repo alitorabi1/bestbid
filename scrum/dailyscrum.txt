@@ -145,3 +145,15 @@ TODO TODAY:
 * facebook userID to database
 
 NEED HELP:
+
+13 oct--------------------- Ali -------------------------------
+Done:
+* facebook userID to database
+* facebook is completed
+* user home page(mostly)
+
+TODO TODAY:
+* user home page
+* adding some css and javascripts
+
+NEED HELP:
