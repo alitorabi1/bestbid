@@ -245,7 +245,7 @@ and open the template in the editor.
 
                     //
                     if (!allGood) {
-                        alert("Invalid values");
+                        //alert("Invalid values");
                         event.preventDefault();
                     }
                 });
