@@ -36,6 +36,87 @@ $app->get('/', function() use ($app) {
 
     // $app->render('index.html.twig', array('sessionUser' => $_SESSION['user']));
 });
+$app->get('/everyminute/', function() use ($app) {
+    DB::$error_handler = FALSE;
+    DB::$throw_exception_on_error = TRUE;
+    try {
+        $now = date("Y-m-d H:i:s");
+        //DB::update('itemsforsell', $record, "bidEndTime<=%s", $now);
+        $itemsList = DB::query("SELECT * FROM itemsforsell where status='open' AND  bidEndTime<=%s ", $now);
+        //--------------------------------------------------------------------------------------------
+        
+        foreach ($itemsList as $item) {
+            $bids = DB::queryFirstRow("SELECT * FROM `bids` WHERE itemId=%d and bidAmount = (select max(bidAmount)FROM `bids` WHERE itemId=%d", $item['ID']);
+
+//sened email
+            if($bids){
+            $userBuyer = DB::queryFirstRow("SELECT * FROM users WHERE ID=%d", $bids['userID']);
+            $userBuyer = $bids['email'];
+            $subject = "You win the auction for " . $item['name'];
+            $txt = "Hello You win the auction for" . $item['name'] . "that you bided for " . $bids['bidAmount'] . " and we pick up the amount in your credit";
+            $headers = "From: bestbid@bestbid.ipd8.info";
+            mail($to, $subject, $txt, $headers);
+
+
+
+            $userSeller = DB::queryFirstRow("SELECT * FROM users WHERE ID=%d", $item['userID']);
+            $to = $userSeller['email'];
+            $subject = "You sold t " . $item['name'];
+            $txt = "Hello You  sold the auction for" . $item['name'] . "that you amount " . $bids['bidAmount'] . " and we increse the amount in your credit";
+            $headers = "From: bestbid@bestbid.ipd8.info";
+            mail($to, $subject, $txt, $headers);
+//status='sold'
+            DB::update('itemsforsell', array(
+                'status' => 'sold'
+                    ), "ID=%d", $item['ID']);
+//purchase table add
+            DB::insert('purchases',array(
+                'itemID' =>  $item['ID'],'buyerId' =>  $bids['userID'],'amount' =>  $bids['bidAmount'],'buyDate' =>  $now
+                    ));
+            
+//discount credit buyer increse credit seller
+          DB::update('users', array(
+                'credit' => $userSeller['credit']+$bids['bidAmount']
+                    ), "ID=%d", $userSeller['ID']); 
+           DB::update('users', array(
+                'credit' => $userSeller['credit']-$bids['bidAmount']
+                    ), "ID=%d", $userBuyer['ID']); 
+           
+           
+           
+                   
+          
+        }else{
+            DB::update('itemsforsell', array(
+                'status' => 'notReachedToSell'
+                    ), "ID=%d", $item['ID']);
+            $userSeller = DB::queryFirstRow("SELECT * FROM users WHERE ID=%d", $item['userID']);
+            $to = $userSeller['email'];
+            $subject = "Your  " . $item['name']. "did not sold";
+            $txt = "Hello You  did not sell the auction for" . $item['name'] ;
+            $headers = "From: bestbid@bestbid.ipd8.info";
+            mail($to, $subject, $txt, $headers);
+        }
+        
+        }//end of for each
+            
+        
+
+
+
+
+
+
+
+        DB::commit();
+    } catch (MeekroDBException $e) {
+        DB::rollback();
+        sql_error_handler(array(
+            'error' => $e->getMessage(),
+            'query' => $e->getQuery()
+        ));
+    }
+});
 
 $app->get('/userexists/:username', function($username) use ($app, $log) {
     $user = DB::queryFirstRow("SELECT * FROM users WHERE username=%s", $username);
@@ -257,6 +338,7 @@ $app->get('/viewsellitem/:ID', function($ID) use ($app) {
     // $app->render('viewitem.html.twig', array('sessionUser' => $_SESSION['user'], 'item' => $item, 'mainCategoryList' => $mainCategoryList));
     $app->render('viewitem.html.twig', array('sessionUser' => $_SESSION['user'], 'item' => $item, 'maxBid' => $maxBid, 'mainCategoryList' => $mainCategoryList));
 });
+
 
 $app->post('/itemsforsell', function() use ($app, $log) {
     //  $body = $app->request->getBody();
