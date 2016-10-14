@@ -179,3 +179,23 @@ chech in bids time if user have a enough credit or no
 error handlig check
 
 NEED HELP:
+
+14 oct--------------------- Behnaz -------------------------------
+Done:
+add user isAdmin and use credit fields to db
+
+close or sell automatically with /everyminute
+   *
+   * implement transaction 
+send email to seller and buyer     
+
+TODO TODAY:
+bids
+add administrator page
+
+check user credit when he/she want to add bids
+multiple page for listes that has more than one page information to show
+chech in bids time if user have a enough credit or no
+error handlig check
+
+NEED HELP:
