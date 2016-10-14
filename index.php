@@ -54,13 +54,25 @@ $app->get('/everyminute/', function() use ($app) {
         //--------------------------------------------------------------------------------------------
 
         foreach ($itemsList as $item) {
+<<<<<<< HEAD
             $bids = DB::queryFirstRow("SELECT * FROM `bids` WHERE itemId=%d and bidAmount = (select max(bidAmount)FROM `bids` WHERE itemId=%d", $item['ID']);
 
 //sened email
+=======
+
+            $bids = DB::queryFirstRow("SELECT * FROM `bids` WHERE itemId=%d and bidAmount = (select max(bidAmount)FROM `bids` WHERE itemId=%d", $item['ID']);
+
+//sened email
+
+>>>>>>> 25b54202863f272f2021a17505a7c2d173b245da
             $bids = DB::queryFirstRow("SELECT * FROM `bids` WHERE itemId=%d and bidAmount = (select max(bidAmount)FROM `bids` WHERE itemId=%d)", $item['ID'], $item['ID']);
 
 //send email
             //send to buyer who win bid 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 25b54202863f272f2021a17505a7c2d173b245da
             if ($bids) {
                 $userBuyer = DB::queryFirstRow("SELECT * FROM users WHERE ID=%d", $bids['userID']);
                 $userBuyer = $bids['email'];
@@ -70,7 +82,15 @@ $app->get('/everyminute/', function() use ($app) {
                 mail($to, $subject, $txt, $headers);
 
 
+<<<<<<< HEAD
 //send to seller 
+=======
+
+
+
+//send to seller 
+
+>>>>>>> 25b54202863f272f2021a17505a7c2d173b245da
                 $userSeller = DB::queryFirstRow("SELECT * FROM users WHERE ID=%d", $item['userID']);
                 $to = $userSeller['email'];
                 $subject = "You sold t " . $item['name'];
@@ -105,13 +125,6 @@ $app->get('/everyminute/', function() use ($app) {
                 mail($to, $subject, $txt, $headers);
             }
         }//end of for each
-
-
-
-
-
-
-
 
 
         DB::commit();
