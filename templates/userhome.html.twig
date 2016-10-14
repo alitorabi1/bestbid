@@ -55,8 +55,8 @@
     <h1>Welcome {{sessionUser.username}} to your home page</h1><br>
 
     <div id="userContents">
-        <h1><a href="/itemsforsell">Submit an Auction</a> - <a href="/addcredit">add credit</a></h1>
-        <div id="divItemsForSale" class="gradient">
+        <h1><a href="/itemsforsell">Add item to sell</a> - <a href="/addcredit">add credit</a></h1>
+        <div id="divItemsForSale" class="gradient"><u>Items to sell</u>
             <table>
                 <tr><th>Name</th><th>Min bid</th><th>Last chance</th></tr>
                         {% if saleList %}
@@ -68,7 +68,7 @@
                 {% endif %}
             </table>
         </div>
-        <div id="divItemsForPurchase" class="gradient">
+        <div id="divItemsForPurchase" class="gradient"><u>Items to purchase</u>
             <table>
                 <tr><th>Item</th><th>Amount</th><th>Date of purchase</th></tr>
                         {% if purchaseList %}
@@ -80,7 +80,7 @@
                 {% endif %}
             </table>
         </div>
-        <div id="divItemsBid" class="gradient">
+        <div id="divItemsBid" class="gradient"><u>Bid items</u>
             <table>
                 <tr><th>Item</th><th>Amount</th><th>Submit date</th></tr>
                         {% if bidList %}

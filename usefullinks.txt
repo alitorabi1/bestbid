@@ -17,6 +17,9 @@ http://stackoverflow.com/questions/4356289/php-random-string-generator
 solution to session timeout:
 https://solutionfactor.net/blog/2014/02/08/implementing-session-timeout-with-php/
 
+https://www.google.com/analytics/?gclid=CMPKl8Lo2s8CFZAAaQodNeMOiA#?modal_active=none
+
+
 behnaz
 -----------
 http://users.tpg.com.au/j_birch/plugins/superfish/examples/#a

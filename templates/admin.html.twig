@@ -55,37 +55,46 @@
     <h1>Welcome to admin page</h1><br>
 
     <div id="userContents">
-        <h1><a href="/">Submit an Auction</a> - <a href="/addcredit">add credit</a></h1>
-        <div id="divItemsForSale" class="gradient">
+        <h1><a href="/itemsforsell">Add item to sell</a> - <a href="/addcredit">add credit</a></h1>
+        <div id="divItemsForSale" class="gradient"><u>Items to sell</u>
             <table>
-                <tr><th>Name</th><th>Min bid</th><th>Last chance</th></tr>
+                <tr><th>Name</th><th>Min bid</th><th>Last chance</th><th>Operation</th></tr>
                         {% if saleList %}
                             {% for sale in saleList %}
-                        <tr><td>{{sale.name}}</td><td>{{sale.minimumBid}}</td><td>{{sale.bidEndTime}}</td></tr>
+                        <tr>
+                            <td>{{sale.name}}</td>
+                            <td>{{sale.minimumBid}}</td>
+                            <td>{{sale.bidEndTime}}</td>
+                            <td><a href="/edit"{{sale.ID}}><img src="images/edit.png" width="25"></a> or <a href="/delete"{{sale.ID}}><img src="images/delete.png" width="25"></a></td>
+                        </tr>
                     {% endfor %}
                 {% else %}
                     <tr><td colspan="3" align="center">No items to show</td></tr>
                 {% endif %}
             </table>
         </div>
-        <div id="divItemsForPurchase" class="gradient">
+        <div id="divItemsForPurchase" class="gradient"><u>Items to purchase</u>
             <table>
-                <tr><th>Item</th><th>Amount</th><th>Date of purchase</th></tr>
+                <tr><th>Item</th><th>Amount</th><th>Date of purchase</th><th>Operation</th></tr>
                         {% if purchaseList %}
                             {% for purchase in purchaseList %}
-                        <tr><td>{{purchase.itemID}}</td><td>{{purchase.amount}}</td><td>{{purchase.buyDate}}</td></tr>
+                        <tr><td>{{purchase.itemID}}</td><td>{{purchase.amount}}</td><td>{{purchase.buyDate}}</td>
+                            <td><a href="/edit"{{purchase.ID}}><img src="images/edit.png" width="25"></a> or <a href="/delete"{{purchase.ID}}></a> or <a hre><img src="images/delete.png" width="25"></a></td>
+                        </tr>
                     {% endfor %}
                 {% else %}
                     <tr><td colspan="3" align="center">No items to show</td></tr>
                 {% endif %}
             </table>
         </div>
-        <div id="divItemsBid" class="gradient">
+        <div id="divItemsBid" class="gradient"><u>Bid items</u>
             <table>
-                <tr><th>Item</th><th>Amount</th><th>Submit date</th></tr>
+                <tr><th>Item</th><th>Amount</th><th>Submit date</th><th>Operation</th></tr>
                         {% if bidList %}
                             {% for bid in bidList %}
-                        <tr><td>{{bid.itemID}}</td><td>{{bid.bidAmount}}</td><td>{{bid.bidDate}}</td></tr>
+                        <tr><td>{{bid.itemID}}</td><td>{{bid.bidAmount}}</td><td>{{bid.bidDate}}</td>
+                            <td><a href="/edit"{{bid.ID}}><img src="images/edit.png" width="25"></a> or <a href="/delete"{{bid.ID}}></a> or <a hre><img src="images/delete.png" width="25"></a></td>
+                        </tr>
                     {% endfor %}
                 {% else %}
                     <tr><td colspan="3" align="center">No items to show</td></tr>
