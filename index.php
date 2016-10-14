@@ -4,6 +4,9 @@ session_start();
 
 // enable on-demand class loader
 require_once 'vendor/autoload.php';
+
+require_once 'sessiontimeout.php';
+
 require_once 'master.php';
 
 // instantiate Slim - router in front controller (this file)
@@ -340,13 +343,10 @@ $app->get('/viewsellitem/:ID', function($ID) use ($app) {
     $app->render('viewitem.html.twig', array('sessionUser' => $_SESSION['user'], 'item' => $item, 'maxBid' => $maxBid, 'mainCategoryList' => $mainCategoryList));
 });
 
-<<<<<<< HEAD
 $app->get('/itemsforsell', function() use ($app, $log) {
     $mainCategoryList = DB::query('SELECT * FROM maincategory');
     $app->render('addsell.html.twig', array('sessionUser' => $_SESSION['user'], 'mainCategoryList' => $mainCategoryList));
 });
-=======
->>>>>>> 371ba2fb496cc0c80e26fd743e37863550ef6f15
 
 $app->post('/itemsforsell', function() use ($app, $log) {
     //  $body = $app->request->getBody();

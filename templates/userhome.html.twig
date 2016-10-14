@@ -52,10 +52,10 @@
 
 {% block content %}
 
-    <h1>Welcome {{sessionUser.username}} to your home page</h1>
+    <h1>Welcome {{sessionUser.username}} to your home page</h1><br>
 
     <div id="userContents">
-        <h1><a href="/itemsforsell">Submit an Auction</a></h1>
+        <h1><a href="/itemsforsell">Submit an Auction</a> - <a href="/addcredit">add credit</a></h1>
         <div id="divItemsForSale" class="gradient">
             <table>
                 <tr><th>Name</th><th>Min bid</th><th>Last chance</th></tr>

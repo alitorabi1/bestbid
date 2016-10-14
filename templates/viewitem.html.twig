@@ -5,14 +5,15 @@
 {% block head %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <style>
-     body{
+{#     body{
         
         
          margin-left: 20px;
           margin-right: 230px;
         
      }
-     img{float:right;margin-right: 80px;}
+#}
+    img{float:right;margin-right: 80px;}
      h4,h2,h5,p,img{
          display:block;
          margin:5px;
@@ -163,7 +164,7 @@
             <input type="number" name="bidAmount" > 
             <input type="hidden"  name="itemID" value="{{item.ID}}" >
              <input type="hidden"  name="userID" value="{{sessionUser.ID}}" >
-            <input type="submit" value="add your bid">
+            <input type="submit" class="button-big" value="add your bid">
         </form>
     {% else %}
         <p>Please <a href="/login">login</a> or <a href="/register">register</a> to submit a bid.</p>

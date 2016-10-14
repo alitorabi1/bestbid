@@ -13,6 +13,10 @@ http://www.quibids.com/en/quibids101/
 http://stackoverflow.com/questions/4356289/php-random-string-generator
 
 
+
+solution to session timeout:
+https://solutionfactor.net/blog/2014/02/08/implementing-session-timeout-with-php/
+
 behnaz
 -----------
 http://users.tpg.com.au/j_birch/plugins/superfish/examples/#a

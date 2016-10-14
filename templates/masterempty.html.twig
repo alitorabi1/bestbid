@@ -60,7 +60,9 @@
             .dropdown:hover .dropdown-content {
                 display: block;
             }
-
+            #divSearch {
+                padding: 0.7em;
+            }
 
         </style>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>       
@@ -168,6 +170,14 @@
                             </div>
                             <!-- Nav -->
                             <ul class="nav_login_register">
+                                    <li>
+                                        <div id="divSearch">
+                                        <form action="/search">
+                                        <font color="white">Search <input type="text" name="itemSearch">
+                                        <input type="submit" class="button-big" value="Go">
+                                        </form>
+                                        </div>
+                                    </li>
                                 {% for mList in mainCategoryList %}
                                     <li  class="dropdown" id="mainu_{{mList.ID}}">
 
@@ -180,9 +190,12 @@
                                         <font color="#cc0000">Welcome {{fbUser.name}}<a href="/fblogout.php"> &nbsp;&nbsp;&nbsp;Logout</a>
                                     </li>
                                 {% elseif sessionUser %}
+                                    {% if isAdmin %}
+                                    {% else %}
                                     <li>
                                         <font color="#cc0000">Welcome &nbsp;&nbsp;{{sessionUser.username}}  &nbsp;&nbsp;&nbsp;<a href="/logout">Logout</a>
                                     </li>
+                                    {% endif %}
                                 {% else %}
                                     <li>
                                         <a href="/login">Login</a>
