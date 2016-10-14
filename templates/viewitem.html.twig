@@ -4,34 +4,7 @@
 
 {% block head %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<style>
-{#     body{
-        
-        
-         margin-left: 20px;
-          margin-right: 230px;
-        
-     }
-#}
-    img{float:right;margin-right: 80px;}
-     h4,h2,h5,p,img{
-         display:block;
-         margin:5px;
-         margin-left: 20px;
-     }
-     h2{
-          font-size:1.5em;
-     }
-     h4,h5{
-         font-size: 1.3em;
-     }
-     p{
-         font-size: 0.8em;
-     }
-     h5{
-         color:red;
-     }
-</style>
+
 <script>
     var eventtext = "Left"; // text that appears next to the time left
     var endtext = "bids Closed!!"; // text that appears when the target has been reached
@@ -136,6 +109,38 @@
         //   }, 1000);
     });
 </script>
+<style>
+{#     body{
+        
+        
+         margin-left: 20px;
+          margin-right: 230px;
+        
+     }
+#}
+    img{float:right;margin-right: 80px;}
+     h4,h2,h5,p,img{
+         display:block;
+         margin:5px;
+         margin-left: 20px;
+     }
+     h2{
+          font-size:1.5em;
+     }
+     h4,h5{
+         font-size: 1.3em;
+     }
+     p{
+         font-size: 0.8em;
+     }
+     h5{
+         color:red;
+     }
+     #errorC{
+         color:red;
+          font-size:.5em;
+     }
+</style>
 {% endblock %}
 {% block content %}
     <h2>{{item.name}}</h2>
@@ -166,6 +171,7 @@
              <input type="hidden"  name="userID" value="{{sessionUser.ID}}" >
             <input type="submit" class="button-big" value="add your bid">
         </form>
+         <p id="errorC"> {{error}}</p>   
     {% else %}
         <p>Please <a href="/login">login</a> or <a href="/register">register</a> to submit a bid.</p>
     {% endif %}
