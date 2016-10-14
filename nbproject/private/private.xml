@@ -3,16 +3,19 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/xampp/htdocs/bestbid/sell.php</file>
             <file>file:/C:/xampp/htdocs/bestbid/templates/master.html.twig</file>
             <file>file:/C:/xampp/htdocs/bestbid/master.php</file>
             <file>file:/C:/xampp/htdocs/bestbid/templates/userhome.html.twig</file>
+            <file>file:/C:/xampp/htdocs/bestbid/templates/admin.html.twig</file>
+            <file>file:/C:/xampp/htdocs/bestbid/templates/addsell.html.twig</file>
+            <file>file:/C:/xampp/htdocs/bestbid/templates/sel.html.twig</file>
             <file>file:/C:/xampp/htdocs/bestbid/assets/css/main.css</file>
             <file>file:/C:/xampp/htdocs/bestbid/templates/index.html.twig</file>
-            <file>file:/C:/xampp/htdocs/bestbid/templates/addsell.html.twig</file>
-            <file>file:/C:/xampp/htdocs/bestbid/sessiontimeout.php</file>
+            <file>file:/C:/xampp/htdocs/bestbid/view.php</file>
+            <file>file:/C:/xampp/htdocs/bestbid/client.php</file>
             <file>file:/C:/xampp/htdocs/bestbid/templates/masterempty.html.twig</file>
             <file>file:/C:/xampp/htdocs/bestbid/index.php</file>
-            <file>file:/C:/xampp/htdocs/bestbid/templates/viewitem.html.twig</file>
         </group>
     </open-files>
 </project-private>

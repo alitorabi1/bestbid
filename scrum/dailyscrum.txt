@@ -199,3 +199,18 @@ chech in bids time if user have a enough credit or no
 error handlig check
 
 NEED HELP:
+
+14 oct--------------------- Ali -------------------------------
+Done:
+* user home page
+* adding some css and javascripts
+* session timeout
+* adding search
+* checking admin role
+* adding bit
+
+TODO TODAY:
+* change password
+* admin page
+
+NEED HELP:
