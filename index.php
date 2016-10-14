@@ -49,7 +49,7 @@ $app->get('/everyminute/', function() use ($app) {
         //--------------------------------------------------------------------------------------------
         
         foreach ($itemsList as $item) {
-            $bids = DB::queryFirstRow("SELECT * FROM `bids` WHERE itemId=%d and bidAmount = (select max(bidAmount)FROM `bids` WHERE itemId=%d", $item['ID']);
+            $bids = DB::queryFirstRow("SELECT * FROM `bids` WHERE itemId=%d and bidAmount = (select max(bidAmount)FROM `bids` WHERE itemId=%d)", $item['ID'],$item['ID']);
 
 //sened email
             if($bids){
@@ -438,8 +438,10 @@ function closeAllSellFinishTime() {
     // echo json_encode(TRUE); // s
 }
 
-$app->get('/searchall/:des', function($des) use ($app) {
-    closeAllSellFinishTime();
+$app->get('/searchall', function() use ($app) {
+   
+    
+    $des = $app->request->post('itemSearch');
     $mainCategoryList = DB::query('SELECT * FROM maincategory');
     $sellList = DB::query("SELECT * FROM itemsforsell WHERE status='open' AND  ( name LIKE  %ss  OR  description LIKE  %ss)", $des, $des);
     // LIKE @ProductName OR Barcode  LIKE @Barcode
