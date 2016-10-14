@@ -105,13 +105,6 @@ $app->get('/everyminute/', function() use ($app) {
         }//end of for each
 
 
-
-
-
-
-
-
-
         DB::commit();
     } catch (MeekroDBException $e) {
         DB::rollback();
