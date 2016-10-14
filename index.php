@@ -30,12 +30,18 @@ if (!isset($_SESSION['user'])) {
 }
 
 $app->get('/', function() use ($app) {
-    closeAllSellFinishTime();
+
     $mainCategoryList = DB::query('SELECT * FROM maincategory');
     $anticItem = DB::queryFirstRow("SELECT * FROM `itemsforsell` WHERE status='open' and minimumBid=(select max(minimumBid) as bid from itemsforsell WHERE status='open' order by ID desc limit 400)order by ID desc limit 400");
     $maxBid = DB::queryFirstRow("SELECT MAX(bidAmount) as max,count(*) as count FROM bids WHERE itemID=%d", $anticItem['ID']);
     $topList = DB::query("SELECT * FROM `itemsforsell` WHERE status='open' order by ID desc LIMIT 4");
-    $app->render('index.html.twig', array('sessionUser' => $_SESSION['user'], 'mainCategoryList' => $mainCategoryList, 'topList' => $topList, 'anticItem' => $anticItem, 'maxBid' => $maxBid));
+    $bidTop=array();
+    foreach ($topList as $tlist) {
+       $maxBidFour = DB::queryFirstRow("SELECT MAX(bidAmount) as max,count(*) as count FROM bids WHERE itemID=%d", $tlist['ID']); 
+       array_push($bidTop,array('max' => $maxBidFour['max'],'count' => $maxBidFour['count'])); 
+        
+    }
+    $app->render('index.html.twig', array('sessionUser' => $_SESSION['user'], 'mainCategoryList' => $mainCategoryList, 'topList' => $topList, 'anticItem' => $anticItem, 'maxBid' => $maxBid,'bidTop' => $bidTop));
 
     // $app->render('index.html.twig', array('sessionUser' => $_SESSION['user']));
 });
@@ -49,9 +55,16 @@ $app->get('/everyminute/', function() use ($app) {
         //--------------------------------------------------------------------------------------------
 
         foreach ($itemsList as $item) {
+<<<<<<< HEAD
             $bids = DB::queryFirstRow("SELECT * FROM `bids` WHERE itemId=%d and bidAmount = (select max(bidAmount)FROM `bids` WHERE itemId=%d", $item['ID']);
 
 //sened email
+=======
+            $bids = DB::queryFirstRow("SELECT * FROM `bids` WHERE itemId=%d and bidAmount = (select max(bidAmount)FROM `bids` WHERE itemId=%d)", $item['ID'], $item['ID']);
+
+//send email
+            //send to buyer who win bid 
+>>>>>>> efd10cd5c60d8176996f25f207a9cdf7cccd9692
             if ($bids) {
                 $userBuyer = DB::queryFirstRow("SELECT * FROM users WHERE ID=%d", $bids['userID']);
                 $userBuyer = $bids['email'];
@@ -61,7 +74,11 @@ $app->get('/everyminute/', function() use ($app) {
                 mail($to, $subject, $txt, $headers);
 
 
+<<<<<<< HEAD
 
+=======
+//send to seller 
+>>>>>>> efd10cd5c60d8176996f25f207a9cdf7cccd9692
                 $userSeller = DB::queryFirstRow("SELECT * FROM users WHERE ID=%d", $item['userID']);
                 $to = $userSeller['email'];
                 $subject = "You sold t " . $item['name'];
@@ -307,7 +324,7 @@ $app->get('/logout', function() use ($app, $log) {
     $mainCategoryList = DB::query('SELECT * FROM maincategory');
     $_SESSION['user'] = array();
     // $app->render('index.html.twig', array('mainCategoryList' => $mainCategoryList));
-    closeAllSellFinishTime();
+
 
     $anticItem = DB::queryFirstRow("SELECT * FROM `itemsforsell` WHERE status='open' and minimumBid=(select max(minimumBid) as bid from itemsforsell WHERE status='open' order by ID desc limit 400)order by ID desc limit 400");
     $maxBid = DB::queryFirstRow("SELECT MAX(bidAmount) as max,count(*) as count FROM bids WHERE itemID=%d", $anticItem['ID']);
@@ -316,7 +333,7 @@ $app->get('/logout', function() use ($app, $log) {
 });
 
 $app->get('/selllist/:ID', function($ID) use ($app) {
-    closeAllSellFinishTime();
+
     $mainCategoryList = DB::query('SELECT * FROM maincategory');
 //if (isset($_GET["page"])) { $page  = $_GET["page"]; } else { $page=1; }; 
 //$start_from = ($page-1) * $results_per_page;
@@ -338,7 +355,7 @@ $app->get('/selllist/:ID', function($ID) use ($app) {
 });
 //wewsellitem/{{mList.ID}}
 $app->get('/viewsellitem/:ID', function($ID) use ($app) {
-    closeAllSellFinishTime();
+
     $mainCategoryList = DB::query('SELECT * FROM maincategory');
     $item = DB::queryFirstRow("SELECT * FROM itemsforsell WHERE status='open' AND ID=%d", $ID);
     $maxBid = DB::queryFirstRow("SELECT MAX(bidAmount) as max,count(*) as count FROM bids WHERE itemID=%d", $ID);
@@ -405,9 +422,24 @@ $app->post('/bids', function() use ($app, $log) {
     //  $record = json_decode($body, TRUE);
     $mainCategoryList = DB::query('SELECT * FROM maincategory');
     $userID = $app->request->post('userID');
+    $userCredit=DB::queryFirstField('SELECT credit FROM users where ID=%d',$userID);
     $bidDate = date("Y-m-d H:i:s");
     $bidAmount = $app->request->post('bidAmount');
     $itemID = $app->request->post('itemID');
+    if(!$bidAmount || $bidAmount<=0  ){
+          $maxBid = DB::queryFirstRow("SELECT MAX(bidAmount) as max,count(*) as count FROM bids WHERE itemID=%d", $itemID);
+        $item=DB::queryFirstRow('SELECT *  FROM itemsforsell where ID=%d',$itemID);
+        $error='the amount must be provided';
+        $app->render('viewitem.html.twig', array('sessionUser' => $_SESSION['user'], 'item' => $item, 'maxBid' => $maxBid, 'mainCategoryList' => $mainCategoryList,'error'=>$error));
+        return;
+    }
+    if( $userCredit<$bidAmount ){
+        $error='your credit is lower than this amount';
+          $maxBid = DB::queryFirstRow("SELECT MAX(bidAmount) as max,count(*) as count FROM bids WHERE itemID=%d", $itemID);
+        $item=DB::queryFirstRow('SELECT *  FROM itemsforsell where ID=%d',$itemID);
+        $app->render('viewitem.html.twig', array('sessionUser' => $_SESSION['user'], 'item' => $item, 'maxBid' => $maxBid, 'mainCategoryList' => $mainCategoryList,'error'=>$error));
+        return;
+    }
     $record = array('userID' => $userID, 'bidDate' => $bidDate, 'bidAmount' => $bidAmount, 'itemID' => $itemID);
     DB::insert('bids', $record);
     echo DB::insertId();
@@ -418,42 +450,34 @@ $app->post('/bids', function() use ($app, $log) {
 
     $maxBid = DB::queryFirstRow("SELECT MAX(bidAmount) as max,count(*) as count FROM bids WHERE itemID=%d", $itemID);
 
-
-
+   
+    
 
     $app->render('sel.html.twig', array('sessionUser' => $_SESSION['user'], 'sellList' => $sellList, 'mainCategoryList' => $mainCategoryList, 'maxBid' => $maxBid));
 });
 
 /////////////////////////////////////////////////////////////
-function closeAllSellFinishTime() {
-    $now = date("Y-m-d H:i:s");
-    /* $tempDate = explode('-', $now['dueDate']);
-      $year=$tempDate[0];
-      $month=$tempDate[1];
-      $tt=explode(' ',tempDate[2]);
-      $day=$tt[0];
-      $hh=explode(':',tt[1]);
-      $hour=$hh[0];
-      $minute=$hh[1]; */
 
-    //close all open sells if time is end
-    $record['status'] = 'notReachedToSell';
 
-    DB::update('itemsforsell', $record, "bidEndTime<=%s", $now);
-    // echo json_encode(TRUE); // s
-}
+$app->get('/searchall', function() use ($app, $log) {
+    //$app->get('/searchall/:des', function($des) use ($app) { 
 
-$app->get('/searchall/:des', function($des) use ($app) {
-    closeAllSellFinishTime();
+    $des = $app->request->get('itemSearch');
     $mainCategoryList = DB::query('SELECT * FROM maincategory');
-    $sellList = DB::query("SELECT * FROM itemsforsell WHERE status='open' AND  ( name LIKE  %ss  OR  description LIKE  %ss)", $des, $des);
-    // LIKE @ProductName OR Barcode  LIKE @Barcode
-    $maxBid = DB::queryFirstRow("SELECT MAX(bidAmount) as max,count(*) as count FROM bids WHERE itemID=%d", $ID);
-    $app->render('sel.html.twig', array('sessionUser' => $_SESSION['user'], 'sellList' => $sellList, 'mainCategoryList' => $mainCategoryList));
+    $sellList = DB::query("SELECT * FROM itemsforsell WHERE  status='open' AND ( name LIKE  %ss  OR  description LIKE  %ss)", $des, $des);
+                                                                                     
+    if ($sellList) {
+
+        $log->debug(sprintf("User %s created", $des));
+        $app->render('sel.html.twig', array('sessionUser' => $_SESSION['user'], 'sellList' => $sellList, 'mainCategoryList' => $mainCategoryList));
+    } else {
+        $log->debug(sprintf("User %s created", $des));
+        $app->render('sel.html.twig', array('sessionUser' => $_SESSION['user'], 'mainCategoryList' => $mainCategoryList));
+    }
     //   $app->render('sel.html.twig', array('sellList' => $sellList));
 });
 $app->get('/topfour/', function() use ($app) {
-    closeAllSellFinishTime();
+
     $mainCategoryList = DB::query('SELECT * FROM maincategory');
     $app->render('login.html.twig', array('mainCategoryList' => $mainCategoryList));
     // LIKE @ProductName OR Barcode  LIKE @Barcode

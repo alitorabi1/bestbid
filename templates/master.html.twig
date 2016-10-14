@@ -7,6 +7,9 @@
         <style>
             #navlogo{display:inline-table;float:left;}
             #categoryMenu{ float: right;display:inline-table; margin: 0 0 10px 10px;}
+            #divSearch{
+                display:inline-table;
+            }
             #logo{
                 float: left;
                 margin: 0 0 10px 10px;
@@ -67,7 +70,27 @@
         </style>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>       
         <script>
+            
             var mainCategoyList;
+            function searchAll(descrip){
+                 $.ajax({
+                    // /searchall/:des
+                    url: "/searchall/" + descrip,
+                    // data: {},
+
+                    statusCode: {
+                        401: function (xhr) {
+                            // $("#loginPane").show();
+                            // $("#listPane").hide();
+                        }
+                    },
+                    type: "GET",
+                    dataType: "json"
+                }).done(function (data) {
+
+                });
+                
+            }
             function loadSellListID(id) {
                 ///sellList/:ID 
                 $.ajax({
@@ -168,10 +191,12 @@
                             <ul class="nav_login_register">
                                     <li>
                                         <div id="divSearch">
-                                        <form action="/search">
+                                      <form action="/searchall" >
                                         <font color="white">Search <input type="text" name="itemSearch">
-                                        <input type="submit" class="button-big" value="Go">
-                                        </form>
+                                        
+                                        <input type="submit" class="button-big" value="Go" >
+                                       
+                                         </form>
                                         </div>
                                     </li>
                                 {% for mList in mainCategoryList %}
@@ -276,8 +301,8 @@
                                         <!--- <img src="images/goods1.jpg" alt="drawer" width="262" height="190" />-->
                                         <img src="/view.php?id={{tList.ID}}" width="262" height="190" >
                                     </a>
-                                    <h2><a  href = "/viewsellitem/{{tList.ID}}" >Submit a bid</a> <font size="2">(Bids: 176)</h2>
-                                    <h2>Last bid: $1,135.00 (last chance: 2016-10-21)</font></h2>
+                                    <h2><a  href = "/viewsellitem/{{tList.ID}}" >Submit a bid</a> <font size="2">(Bids: {{bidbidTop.count}})</h2>
+                                    <h2>Last bid: {{bidbidTop.max}} (last chance: {{tList.bidEndTime}})</font></h2>
                                 </section>
 
 
