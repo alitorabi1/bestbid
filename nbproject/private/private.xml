@@ -6,24 +6,15 @@
             <file>file:/C:/xampp/htdocs/bestbid/templates/master.html.twig</file>
             <file>file:/C:/xampp/htdocs/bestbid/master.php</file>
             <file>file:/C:/xampp/htdocs/bestbid/templates/userhome.html.twig</file>
-<<<<<<< HEAD
             <file>file:/C:/xampp/htdocs/bestbid/templates/admin.html.twig</file>
-            <file>file:/C:/xampp/htdocs/bestbid/assets/css/main.css</file>
-            <file>file:/C:/xampp/htdocs/bestbid/templates/index.html.twig</file>
-            <file>file:/C:/xampp/htdocs/bestbid/view.php</file>
             <file>file:/C:/xampp/htdocs/bestbid/templates/addsell.html.twig</file>
-            <file>file:/C:/xampp/htdocs/bestbid/client.php</file>
-            <file>file:/C:/xampp/htdocs/bestbid/templates/sel.html.twig</file>
-=======
-            <file>file:/C:/xampp/htdocs/bestbid/templates/addsell.html.twig</file>
-            <file>file:/C:/xampp/htdocs/bestbid/templates/sel.html.twig</file>
+            <file>file:/C:/xampp/htdocs/bestbid/templates/register.html.twig</file>
             <file>file:/C:/xampp/htdocs/bestbid/templates/viewitem.html.twig</file>
             <file>file:/C:/xampp/htdocs/bestbid/assets/css/main.css</file>
+            <file>file:/C:/xampp/htdocs/bestbid/templates/error_internal.html.twig</file>
             <file>file:/C:/xampp/htdocs/bestbid/templates/index.html.twig</file>
-            <file>file:/C:/xampp/htdocs/bestbid/view.php</file>
             <file>file:/C:/xampp/htdocs/bestbid/sessiontimeout.php</file>
-            <file>file:/C:/xampp/htdocs/bestbid/logs/errors.log</file>
->>>>>>> 25b54202863f272f2021a17505a7c2d173b245da
+            <file>file:/C:/xampp/htdocs/bestbid/templates/underconstruction.html.twig</file>
             <file>file:/C:/xampp/htdocs/bestbid/templates/masterempty.html.twig</file>
             <file>file:/C:/xampp/htdocs/bestbid/index.php</file>
         </group>

@@ -55,7 +55,13 @@
     <h1>Welcome {{sessionUser.username}} to your home page</h1><br>
 
     <div id="userContents">
-        <h1><a href="/itemsforsell">Add item to sell</a> - <a href="/addcredit">add credit</a></h1>
+        <h1><a href="/itemsforsell">Add item to sell</a>
+            <form method="post" action="/addcredit">
+                <input type="number" name="creditAmount">
+                <input type="hidden" name="userID" value="{{sessionUser.ID}}">
+                <input class="button-big" type="submit" value="Add credit">
+            </form>
+        </h1>
         <div id="divItemsForSale" class="gradient"><u>Items to sell</u>
             <table>
                 <tr><th>Name</th><th>Min bid</th><th>Last chance</th></tr>

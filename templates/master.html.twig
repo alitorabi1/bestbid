@@ -207,29 +207,8 @@
                                     </li>
                                 {% elseif sessionUser %}
                                     <li>
-                                        <font color="#cc0000">Welcome &nbsp;&nbsp;{{sessionUser.username}}  &nbsp; (credit: {{sessionUser.credit}})&nbsp;&nbsp;&nbsp;  <a href="/userhome">My home</a> &nbsp;&nbsp;&nbsp; <a href="/logout">Logout</a>
+                                        <font color="#cc0000">Welcome &nbsp;&nbsp;{{sessionUser.username}}  &nbsp; (credit: {{sessionUser.credit}})&nbsp;&nbsp;&nbsp;  <a href="/userhome/{{sessionUser.isAdmin}}">My home</a> &nbsp;&nbsp;&nbsp; <a href="/logout">Logout</a>
                                     </li>
-                                    <!--- ----------------------------->
-                                    <!--li  class="dropdown">
-                                        <a href="#"  class="dropbtn"      >sells</a> 
-                                        <ul>
-                                            <li  >
-
-
-                                                <a href="selll.php"  class="dropbtn"     >Add new Sell</a>
-                                            </li> 
-                                            <li  >
-
-
-                                                <a href="/"  class="dropbtn"     >your History</a>
-                                            </li>
-                                           
-                                        </ul>
-                                    </li>
-                                    <!--- ----------------------------->
-                                    <!--li>
-                                        <font color="#cc0000">Welcome &nbsp;&nbsp;{{sessionUser.username}}  &nbsp;&nbsp;&nbsp;<a href="/logout">Logout</a>
-                                    </li-->
                                 {% else %}
                                     <li>
                                         <a href="/login">Login</a>

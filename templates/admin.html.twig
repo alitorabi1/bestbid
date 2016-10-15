@@ -14,23 +14,19 @@
             background: -moz-linear-gradient(red, black); /* For Firefox 3.6 to 15 */
             background: linear-gradient(red, black); /* Standard syntax (must be last) */
         }
-        #userContents {
-            display: inline-table;
-            margin-left: 2em;
-            margin-right: 2em;
-        }
         #userContents div {
             border-radius: 5px;
             margin-right: 1em;
         }
-        #divItemsForSale, #divItemsForPurchase, #divItemsBid {
-            float: left;
+        #divItemsForSale, #divItemsForPurchase, #divItemsBid, #divUsers, #divMainCategory, #divCategory {
             padding: .5em;
+            margin: .5em;
         }
-        #divItemsForSale td, #divItemsForPurchase td, #divItemsBid  td {
+        #divItemsForSale th, #divItemsForPurchase th, #divItemsBid  th, #divUsers th, #divMainCategory th, #divCategory th {
             padding: .5em;
+            color: #D4D9DD;
         }
-        #divItemsForSale th, #divItemsForPurchase th, #divItemsBid  th {
+        #divItemsForSale td, #divItemsForPurchase td, #divItemsBid  td, #divUsers td, #divMainCategory td, #divCategory td {
             padding: .5em;
             color: #D4D9DD;
         }
@@ -55,7 +51,58 @@
     <h1>Welcome to admin page</h1><br>
 
     <div id="userContents">
-        <h1><a href="/itemsforsell">Add item to sell</a> - <a href="/addcredit">add credit</a></h1>
+        <h1><a href="/itemsforsell">Add item to sell</a>
+            <form method="post" action="/addcredit">
+                <input type="number" name="creditAmount">
+                <input type="hidden" name="userID" value="{{sessionUser.ID}}">
+                <input class="button-big" type="submit" value="Add credit">
+            </form>
+        </h1>
+        <div id="divUsers" class="gradient"><u>Users</u>&nbsp;&nbsp;&nbsp;<a href="/adduser"><img src="/images/add.png" width="35"></a>
+            <table>
+                <tr><th>ID</th><th>Name</th><th>email</th><th>Operation</th></tr>
+                        {% if userList %}
+                            {% for user in userList %}
+                        <tr><td>{{user.itemID}}</td><td>{{user.username}}</td><td>{{user.email}}</td>
+                            <td><a href="/edit/{{user.ID}}"><img src="/images/edit.png" width="25"></a> or <a href="/delete/{{user.ID}}"><img src="/images/delete.png" width="25"></a></td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr><td colspan="3" align="center">No items to show</td></tr>
+                {% endif %}
+            </table>
+        </div>
+
+        <div id="divMainCategory" class="gradient"><u>Main category</u>&nbsp;&nbsp;&nbsp;<a href="/addmaincategory"><img src="/images/add.png" width="35"></a>
+            <table>
+                <tr><th>ID</th><th>Name</th><th>Operation</th></tr>
+                        {% if mainCategoryList %}
+                            {% for mainCategory in mainCategoryList %}
+                        <tr><td>{{mainCategory.ID}}</td><td>{{mainCategory.name}}</td>
+                            <td><a href="/edit/{{mainCategory.ID}}"><img src="/images/edit.png" width="25"></a> or <a href="/delete/{{mainCategory.ID}}"><img src="/images/delete.png" width="25"></a></td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr><td colspan="3" align="center">No items to show</td></tr>
+                {% endif %}
+            </table>
+        </div>
+
+        <div id="divCategory" class="gradient"><u>Category</u>&nbsp;&nbsp;&nbsp;<a href="/addcategory"><img src="/images/add.png" width="35"></a>
+            <table>
+                <tr><th>ID</th><th>Name</th><th>Operation</th></tr>
+                        {% if categoryList %}
+                            {% for category in categoryList %}
+                        <tr><td>{{category.ID}}</td><td>{{category.name}}</td>
+                            <td><a href="/edit/{{category.ID}}"><img src="/images/edit.png" width="25"></a> or <a href="/delete/{{category.ID}}"><img src="/images/delete.png" width="25"></a></td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr><td colspan="3" align="center">No items to show</td></tr>
+                {% endif %}
+            </table>
+        </div>
+            
         <div id="divItemsForSale" class="gradient"><u>Items to sell</u>
             <table>
                 <tr><th>Name</th><th>Min bid</th><th>Last chance</th><th>Operation</th></tr>
@@ -65,7 +112,7 @@
                             <td>{{sale.name}}</td>
                             <td>{{sale.minimumBid}}</td>
                             <td>{{sale.bidEndTime}}</td>
-                            <td><a href="/edit"{{sale.ID}}><img src="images/edit.png" width="25"></a> or <a href="/delete"{{sale.ID}}><img src="images/delete.png" width="25"></a></td>
+                            <td><a href="/edit/{{sale.ID}}"><img src="/images/edit.png" width="25"></a> or <a href="/delete/{{sale.ID}}"><img src="/images/delete.png" width="25"></a></td>
                         </tr>
                     {% endfor %}
                 {% else %}
@@ -79,7 +126,7 @@
                         {% if purchaseList %}
                             {% for purchase in purchaseList %}
                         <tr><td>{{purchase.itemID}}</td><td>{{purchase.amount}}</td><td>{{purchase.buyDate}}</td>
-                            <td><a href="/edit"{{purchase.ID}}><img src="images/edit.png" width="25"></a> or <a href="/delete"{{purchase.ID}}></a> or <a hre><img src="images/delete.png" width="25"></a></td>
+                            <td><a href="/edit/{{purchase.ID}}"><img src="/images/edit.png" width="25"></a> or <a href="/delete/{{purchase.ID}}"><img src="/images/delete.png" width="25"></a></td>
                         </tr>
                     {% endfor %}
                 {% else %}
@@ -93,7 +140,7 @@
                         {% if bidList %}
                             {% for bid in bidList %}
                         <tr><td>{{bid.itemID}}</td><td>{{bid.bidAmount}}</td><td>{{bid.bidDate}}</td>
-                            <td><a href="/edit"{{bid.ID}}><img src="images/edit.png" width="25"></a> or <a href="/delete"{{bid.ID}}></a> or <a hre><img src="images/delete.png" width="25"></a></td>
+                            <td><a href="/edit/{{bid.ID}}"><img src="/images/edit.png" width="25"></a> or <a href="/delete/{{bid.ID}}"><img src="/images/delete.png" width="25"></a></td>
                         </tr>
                     {% endfor %}
                 {% else %}

@@ -188,7 +188,7 @@
                                     </li>
                                 {% elseif sessionUser %}
                                     <li>
-                                        <font color="#cc0000">Welcome &nbsp;&nbsp;{{sessionUser.username}}  &nbsp; (credit: {{sessionUser.credit}})&nbsp;&nbsp;&nbsp;  <a href="/userhome">My home</a> &nbsp;&nbsp;&nbsp; <a href="/logout">Logout</a>
+                                        <font color="#cc0000">Welcome &nbsp;&nbsp;{{sessionUser.username}}  &nbsp; (credit: {{sessionUser.credit}})&nbsp;&nbsp;&nbsp;  <a href="/userhome/{{sessionUser.isAdmin}}">My home</a> &nbsp;&nbsp;&nbsp; <a href="/logout">Logout</a>
                                     </li>
                                 {% else %}
                                     <li>
