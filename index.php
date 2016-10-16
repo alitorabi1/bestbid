@@ -144,7 +144,7 @@ $helper = $fb->getRedirectLoginHelper();
 $permissions = ['public_profile', 'email', 'user_location']; // optional
 
 $loginUrl = $helper->getLoginUrl('http://bestbid.ipd8.info/fblogin.php', $permissions);
-$logoutUrl = $helper->getLogoutUrl('http://bestbid.ipd8.info/fblogout.php', $permissions);
+//$logoutUrl = $helper->getLogoutUrl('http://bestbid.ipd8.info/fblogout.php', $permissions);
 
 $fbUser = array();
 if (isset($_SESSION['facebook_access_token'])) {
@@ -154,8 +154,7 @@ if (isset($_SESSION['facebook_access_token'])) {
 $twig = $app->view()->getEnvironment();
 $twig->addGlobal('fbUser', $fbUser);
 $twig->addGlobal('loginUrl', $loginUrl);
-$twig->addGlobal('logoutUrl', $logoutUrl);
-
+//$twig->addGlobal('logoutUrl', $logoutUrl);
 //print_r($fbUser);
 //print_r($_SESSION['fbmetadata']);
 // State 1: first show
@@ -317,10 +316,13 @@ $app->post('/login', function() use ($app, $log) {
 $app->get('/userhome/:role', function($role) use ($app) {
     $mainCategoryList = DB::query('SELECT * FROM maincategory');
     if ($role === 'admin') {
-        $categoryList = DB::query('SELECT * FROM category');
+        $categoryList = DB::query('SELECT c.name as name, m.name as maincategory FROM category c, maincategory m WHERE c.mainCategoryID=m.ID');
+//        $saleList = DB::query('SELECT * FROM itemsforsell');
+//        $purchaseList = DB::query('SELECT * FROM purchases');
+//        $bidList = DB::query('SELECT * FROM bids');
         $saleList = DB::query('SELECT * FROM itemsforsell');
-        $purchaseList = DB::query('SELECT * FROM purchases');
-        $bidList = DB::query('SELECT * FROM bids');
+        $purchaseList = DB::query('SELECT p.amount as amount, p.buyDate as day, i.name as name FROM purchases p, itemsforsell i WHERE p.itemID=i.ID');
+        $bidList = DB::query('SELECT b.bidAmount as amount, b.bidDate as day, i.name as name FROM bids b, itemsforsell i WHERE b.itemID=i.ID');
         $userList = DB::query('SELECT * FROM users');
         $app->render('admin.html.twig', array('sessionUser' => $_SESSION['user'],
             'mainCategoryList' => $mainCategoryList, 'saleList' => $saleList,
@@ -329,8 +331,8 @@ $app->get('/userhome/:role', function($role) use ($app) {
         ));
     } else {
         $saleList = DB::query('SELECT * FROM itemsforsell WHERE userID=%d', $_SESSION['user']['ID']);
-        $purchaseList = DB::query('SELECT * FROM purchases WHERE buyerID=%d', $_SESSION['user']['ID']);
-        $bidList = DB::query('SELECT * FROM bids WHERE userID=%d', $_SESSION['user']['ID']);
+        $purchaseList = DB::query('SELECT p.amount as amount, p.buyDate as day, i.name as name FROM purchases p, itemsforsell i WHERE p.itemID=i.ID AND p.buyerID=%d', $_SESSION['user']['ID']);
+        $bidList = DB::query('SELECT b.bidAmount as amount, b.bidDate as day, i.name as name FROM bids b, itemsforsell i WHERE b.itemID=i.ID AND b.userID=%d', $_SESSION['user']['ID']);
         $app->render('userhome.html.twig', array('sessionUser' => $_SESSION['user'], 'mainCategoryList' => $mainCategoryList, 'saleList' => $saleList, 'purchaseList' => $purchaseList, 'bidList' => $bidList));
     }
 });
@@ -362,7 +364,8 @@ $app->get('/addcategory', function() use ($app) {
 
 $app->get('/logout', function() use ($app, $log) {
     $mainCategoryList = DB::query('SELECT * FROM maincategory');
-    $_SESSION['user'] = array();
+    $_SESSION['facebook_access_token'] = NULL;
+    $_SESSION['user'] = NULL;
     // $app->render('index.html.twig', array('mainCategoryList' => $mainCategoryList));
 
 

@@ -28,7 +28,7 @@
             padding: .5em;
         }
         #divItemsForSale td, #divItemsForPurchase td, #divItemsBid  td {
-            padding: .5em;
+            padding: .2em;
         }
         #divItemsForSale th, #divItemsForPurchase th, #divItemsBid  th {
             padding: .5em;
@@ -53,6 +53,7 @@
 {% block content %}
 
     <h1>Welcome {{sessionUser.username}} to your home page</h1><br>
+    <a href="/report.php"> Open pdf </a>
 
     <div id="userContents">
         <h1><a href="/itemsforsell">Add item to sell</a>
@@ -61,7 +62,7 @@
                 <input type="hidden" name="userID" value="{{sessionUser.ID}}">
                 <input class="button-big" type="submit" value="Add credit">
             </form>
-        </h1>
+        </h1><br>
         <div id="divItemsForSale" class="gradient"><u>Items to sell</u>
             <table>
                 <tr><th>Name</th><th>Min bid</th><th>Last chance</th></tr>
@@ -79,7 +80,7 @@
                 <tr><th>Item</th><th>Amount</th><th>Date of purchase</th></tr>
                         {% if purchaseList %}
                             {% for purchase in purchaseList %}
-                        <tr><td>{{purchase.itemID}}</td><td>{{purchase.amount}}</td><td>{{purchase.buyDate}}</td></tr>
+                        <tr><td>{{purchase.name}}</td><td>{{purchase.amount}}</td><td>{{purchase.day}}</td></tr>
                     {% endfor %}
                 {% else %}
                     <tr><td colspan="3" align="center">No items to show</td></tr>
@@ -91,7 +92,7 @@
                 <tr><th>Item</th><th>Amount</th><th>Submit date</th></tr>
                         {% if bidList %}
                             {% for bid in bidList %}
-                        <tr><td>{{bid.itemID}}</td><td>{{bid.bidAmount}}</td><td>{{bid.bidDate}}</td></tr>
+                        <tr><td>{{bid.name}}</td><td>{{bid.amount}}</td><td>{{bid.day}}</td></tr>
                     {% endfor %}
                 {% else %}
                     <tr><td colspan="3" align="center">No items to show</td></tr>

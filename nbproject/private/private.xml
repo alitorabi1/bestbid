@@ -8,14 +8,18 @@
             <file>file:/C:/xampp/htdocs/bestbid/templates/userhome.html.twig</file>
             <file>file:/C:/xampp/htdocs/bestbid/templates/admin.html.twig</file>
             <file>file:/C:/xampp/htdocs/bestbid/templates/addsell.html.twig</file>
+            <file>file:/C:/xampp/htdocs/bestbid/report.php</file>
             <file>file:/C:/xampp/htdocs/bestbid/templates/register.html.twig</file>
             <file>file:/C:/xampp/htdocs/bestbid/templates/viewitem.html.twig</file>
             <file>file:/C:/xampp/htdocs/bestbid/assets/css/main.css</file>
             <file>file:/C:/xampp/htdocs/bestbid/templates/error_internal.html.twig</file>
+            <file>file:/C:/xampp/htdocs/bestbid/composer.json</file>
             <file>file:/C:/xampp/htdocs/bestbid/templates/index.html.twig</file>
             <file>file:/C:/xampp/htdocs/bestbid/sessiontimeout.php</file>
+            <file>file:/C:/xampp/htdocs/bestbid/fblogin.php</file>
             <file>file:/C:/xampp/htdocs/bestbid/templates/underconstruction.html.twig</file>
             <file>file:/C:/xampp/htdocs/bestbid/templates/masterempty.html.twig</file>
+            <file>file:/C:/xampp/htdocs/bestbid/templates/login.html.twig</file>
             <file>file:/C:/xampp/htdocs/bestbid/index.php</file>
         </group>
     </open-files>

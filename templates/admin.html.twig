@@ -58,7 +58,7 @@
                 <input class="button-big" type="submit" value="Add credit">
             </form>
         </h1>
-        <div id="divUsers" class="gradient"><u>Users</u>&nbsp;&nbsp;&nbsp;<a href="/adduser"><img src="/images/add.png" width="35"></a>
+        <div id="divUsers" class="gradient"><u>Users</u>&nbsp;&nbsp;&nbsp;<a href="/adduser"><img src="/images/Add.png" width="35"></a>
             <table>
                 <tr><th>ID</th><th>Name</th><th>email</th><th>Operation</th></tr>
                         {% if userList %}
@@ -73,7 +73,7 @@
             </table>
         </div>
 
-        <div id="divMainCategory" class="gradient"><u>Main category</u>&nbsp;&nbsp;&nbsp;<a href="/addmaincategory"><img src="/images/add.png" width="35"></a>
+        <div id="divMainCategory" class="gradient"><u>Main category</u>&nbsp;&nbsp;&nbsp;<a href="/addmaincategory"><img src="/images/Add.png" width="35"></a>
             <table>
                 <tr><th>ID</th><th>Name</th><th>Operation</th></tr>
                         {% if mainCategoryList %}
@@ -88,12 +88,12 @@
             </table>
         </div>
 
-        <div id="divCategory" class="gradient"><u>Category</u>&nbsp;&nbsp;&nbsp;<a href="/addcategory"><img src="/images/add.png" width="35"></a>
+        <div id="divCategory" class="gradient"><u>Category</u>&nbsp;&nbsp;&nbsp;<a href="/addcategory"><img src="/images/Add.png" width="35"></a>
             <table>
-                <tr><th>ID</th><th>Name</th><th>Operation</th></tr>
+                <tr><th>Main category</th><th>Name</th><th>Operation</th></tr>
                         {% if categoryList %}
                             {% for category in categoryList %}
-                        <tr><td>{{category.ID}}</td><td>{{category.name}}</td>
+                        <tr><td>{{category.maincategory}}</td><td>{{category.name}}</td>
                             <td><a href="/edit/{{category.ID}}"><img src="/images/edit.png" width="25"></a> or <a href="/delete/{{category.ID}}"><img src="/images/delete.png" width="25"></a></td>
                         </tr>
                     {% endfor %}
@@ -125,7 +125,7 @@
                 <tr><th>Item</th><th>Amount</th><th>Date of purchase</th><th>Operation</th></tr>
                         {% if purchaseList %}
                             {% for purchase in purchaseList %}
-                        <tr><td>{{purchase.itemID}}</td><td>{{purchase.amount}}</td><td>{{purchase.buyDate}}</td>
+                        <tr><td>{{purchase.name}}</td><td>{{purchase.amount}}</td><td>{{purchase.day}}</td>
                             <td><a href="/edit/{{purchase.ID}}"><img src="/images/edit.png" width="25"></a> or <a href="/delete/{{purchase.ID}}"><img src="/images/delete.png" width="25"></a></td>
                         </tr>
                     {% endfor %}
@@ -139,7 +139,7 @@
                 <tr><th>Item</th><th>Amount</th><th>Submit date</th><th>Operation</th></tr>
                         {% if bidList %}
                             {% for bid in bidList %}
-                        <tr><td>{{bid.itemID}}</td><td>{{bid.bidAmount}}</td><td>{{bid.bidDate}}</td>
+                        <tr><td>{{bid.name}}</td><td>{{bid.amount}}</td><td>{{bid.day}}</td>
                             <td><a href="/edit/{{bid.ID}}"><img src="/images/edit.png" width="25"></a> or <a href="/delete/{{bid.ID}}"><img src="/images/delete.png" width="25"></a></td>
                         </tr>
                     {% endfor %}

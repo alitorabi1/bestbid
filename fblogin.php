@@ -82,17 +82,18 @@ try {
 
 
 $fbUser = array(
+    'name' => $userNode->getName(),
     'username' => $userNode->getName(),
     'email'=> $userNode->getEmail(),
     'gender' => $userNode->getGender(),
     'ID' => $id,
     'location' => $userNode->getLocation(),
+    'isAdmin' => "user"
 );
+
+//$user = DB::queryFirstRow("SELECT * FROM users WHERE username=%s", $fbUser.username);
 
 $_SESSION['facebook_access_token'] = $fbUser;
 $_SESSION['user'] = $fbUser;
         
 header("Location: /");  
-
-
-
