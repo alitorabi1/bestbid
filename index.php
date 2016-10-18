@@ -144,7 +144,6 @@ $helper = $fb->getRedirectLoginHelper();
 $permissions = ['public_profile', 'email', 'user_location']; // optional
 
 $loginUrl = $helper->getLoginUrl('http://bestbid.ipd8.info/fblogin.php', $permissions);
-//$logoutUrl = $helper->getLogoutUrl('http://bestbid.ipd8.info/fblogout.php', $permissions);
 
 $fbUser = array();
 if (isset($_SESSION['facebook_access_token'])) {
