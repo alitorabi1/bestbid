@@ -254,6 +254,9 @@
 {% endblock%}
 
 {% block content %}
+    {% for error in errorList %}
+        <p>{{ error }}</p>
+    {% endfor %}
 
     <form method="post" enctype="multipart/form-data" action="/itemsforsell" id="registrationForm">
         <div class="container">
